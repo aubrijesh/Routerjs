@@ -2,7 +2,7 @@ html, body {
 	height: 100%;
 }
 body {
-	background-color: #fdfdfd;
+	background-color: #d6d5d5;
 	margin: 0;
 	overflow: hidden;
 }
@@ -12,20 +12,28 @@ body .router {
 section header {
 	display: flex;
 	flex-direction: row;
-	padding: .5em 0;
+	padding: .5em;
+	border-bottom: 1px solid #d6d5d5;
 }
 section header .next {
 	order: 1;
 	text-align: right;
+	justify-content: flex-end;
 }
 section header .prev {
 	order: -1;
 	text-align: left;
+	justify-content: flex-start;
 }
 section header .next,
 section header .prev {
 	width: 50px;
-	
+	display: flex;
+    align-items: center;
+}
+section header .next img,
+section header .prev img {
+	width: 40%;
 }
 section header h2 {
 	width: calc(100% - 50px);
@@ -89,8 +97,10 @@ section header h2 {
 }
 .route-slider.slide-left {
 	width: 100%;
-	padding: 1em;
 	left: 0 !important;
+}
+.route-slider.slide-left section .content{
+	padding: 1em;
 }
 
 @-webkit-keyframes slide-left {
