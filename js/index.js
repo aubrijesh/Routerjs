@@ -17,7 +17,7 @@ $(document).ready(function() {
 			template: "#template-fourth"
 		}
 	];
-	Router.init(routes,'slide-left');
+	Router.init(routes);
 	$('body').on('click','.next', function() {
 		Router.push();
 	})
