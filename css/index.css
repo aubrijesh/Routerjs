@@ -1,6 +1,37 @@
-.body {
-	background-color: #fdfdfd;
+html, body {
+	height: 100%;
 }
+body {
+	background-color: #fdfdfd;
+	margin: 0;
+	overflow: hidden;
+}
+body .router {
+	height: 100%;
+}
+section header {
+	display: flex;
+	flex-direction: row;
+	padding: .5em 0;
+}
+section header .next {
+	order: 1;
+	text-align: right;
+}
+section header .prev {
+	order: -1;
+	text-align: left;
+}
+section header .next,
+section header .prev {
+	width: 50px;
+	
+}
+section header h2 {
+	width: calc(100% - 50px);
+	margin: 0;
+}
+
 .navbar{
     padding: 1em;
     display: flex;
@@ -31,4 +62,71 @@
 }
 #route-content p {
 	text-align: justify;
+}
+
+/* for animation of route */
+.slider {
+	position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    box-sizing: border-box;
+    opacity: .5;
+    transition: all .3s;
+}
+.route-slider {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    text-align: center;
+    text-align: justify;
+    transition: all .3s cubic-bezier(0,.69,.96,.85);
+    box-sizing: border-box;
+    opacity: 1;
+}
+.route-slider.slide-left {
+	width: 100%;
+	padding: 1em;
+	left: 0 !important;
+}
+
+@-webkit-keyframes slide-left {
+	100% {
+		left: 0%;
+	}
+}
+
+@keyframes slide-left {
+    100% { left: 0; }
+}
+
+.slide-in {
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+}
+
+.slide-out {
+    animation: slide-out 0.5s forwards;
+    -webkit-animation: slide-out 0.5s forwards;
+}
+  
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-in {
+    100% { -webkit-transform: translateX(0%); }
+}
+    
+@keyframes slide-out {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}
+
+@-webkit-keyframes slide-out {
+    0% { -webkit-transform: translateX(0%); }
+    100% { -webkit-transform: translateX(-100%); }
 }

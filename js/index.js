@@ -7,7 +7,21 @@ $(document).ready(function() {
 		{
 			name: 'second',
 			template: '#template-second',
+		},
+		{
+			name: 'third',
+			template: "#template-third"
+		},
+		{
+			name: 'fourth',
+			template: "#template-fourth"
 		}
 	];
-	Router.init(routes);
+	Router.init(routes,'slide-left');
+	$('body').on('click','.next', function() {
+		Router.push();
+	})
+	$('body').on('click','.prev', function() {
+		Router.pop();
+	})
 });

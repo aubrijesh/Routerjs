@@ -6,12 +6,16 @@
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<nav class="navbar">
-		<span class="route-link" data-route="first">First</span>
-		<span class="route-link" data-route="second">Second</span>
-	</nav>
-	<div id="route-content">
-		You have not selected any route.
+	<!-- <div class="router">
+		<nav class="navbar">
+			<span class="route-link" data-route="first">First</span>
+			<span class="route-link" data-route="second">Second</span>
+		</nav>
+		<div id="route-content">
+			You have not selected any route.
+		</div>
+	</div> -->
+	<div class="slider route-slider">
 	</div>
 </body>
 <script type="text/javascript" src="js/jquery-min.js"></script>
@@ -20,26 +24,84 @@
 <script type="text/javascript" src="js/index.js"></script>
 </html>
 <template id="template-first">
-	<h2> First Template</h2>
-	<div class="content">
-		<div class="item">
-			<span class="name">this is for first template</span>
-			<span>First Template</span>
+	<section class="first-template">
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
+			</div>
+			<h2> First Template</h2>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for first template</span>
+				<span>First Template</span>
+			</div>
+			<p>
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+			</p>
 		</div>
-		<p>
-		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-		</p>
-	</div>
+	</section>
 </template>
 <template id="template-second">
-	<h2> Second Template</h2>
-	<div class="content">
-		<div class="item">
-			<span class="name">this is for second template</span>
-			<span>Second Template</span>
+	<section class="second-template">
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
+			</div>
+			<h2>Second template</h2>
+			<div class="prev">
+				<img src="image/back.png" />
+			</div>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for second template</span>
+				<span>Second Template</span>
+			</div>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
 		</div>
-		<p>
-		There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-		</p>
-	</div>
+	</section>
+</template>
+<template id="template-third">
+	<section class="second-template">
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
+			</div>
+			<h2>third</h2>
+			<div class="prev">
+				<img src="image/back.png" />
+			</div>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for Third template</span>
+				<span>Third Template</span>
+			</div>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
+		</div>
+	</section>
+</template>
+<template id="template-fourth">
+	<section class="second-template">
+		<header>
+			<div class="prev">
+				<img src="image/back.png" />
+			</div>
+			<h2>fourth</h2>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for Fourth template</span>
+				<span>Fourth Template</span>
+			</div>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
+		</div>
+	</section>
 </template>
