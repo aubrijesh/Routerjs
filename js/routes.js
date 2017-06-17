@@ -13,14 +13,14 @@
 			var source   = $(templateId).html();
 			var template = hb.compile(source);
 			var html  = template(data);
-			var slider = document.getElementsByClassName('slider')[0];
+			var slider = document.getElementsByClassName('route-slider')[0];
 			if(!Router.activeAnimaion) {
 				Router.activeAnimaion = Router.animations.push;
 			}
 			if(slider.classList.length > 1) {
 				slider.innerHTML = "";
-				slider.classList = ['slider'];
-				slider.classList.add("route-slider", Router.activeAnimaion.name);
+				slider.classList = ['route-slider'];
+				slider.classList.add( Router.activeAnimaion.name);
 				
 			}
 			else {
@@ -32,7 +32,6 @@
 				 	slider.className += ' '+ Router.activeAnimaion.name;
 				}
 			}
-			
 			setTimeout(function() {
 				slider.innerHTML = html;
 				slider.classList.add("slide");
