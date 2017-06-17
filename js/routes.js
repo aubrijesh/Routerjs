@@ -1,41 +1,43 @@
 (function($, hb) {
 	initilization = function() {
 		var pushState = history.pushState;
-
-		/* route link click event */
-		$('body').on('click', '.route-link', function() {
-			var active_route = $(this).attr('data-route');
-			Router.go(active_route);
-		});
-
+		createElements = function() {
+			var routerLen = Router.routes.length;
+			for(let i=0;i<Router.routes.length; i++) {
+				var newElmement = document.createElement('div');
+				var $routes = document.getElementById('routes');
+				newElmement.classList = ['route-slider'];
+				newElmement.setAttribute('data-route-index',i);
+				newElmement.style.zIndex = (routerLen - i);
+				$routes.appendChild(newElmement);
+			}
+		}
+		createElements();
 		/* for rendering of matched route template */
 		render = function(templateId, el, data) {
 			var source   = $(templateId).html();
 			var template = hb.compile(source);
 			var html  = template(data);
-			var slider = document.getElementsByClassName('route-slider')[0];
+			var allSlider = document.getElementsByClassName('route-slider slide');
+			var slider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
 			if(!Router.activeAnimaion) {
 				Router.activeAnimaion = Router.animations.push;
 			}
-			if(slider.classList.length > 1) {
-				slider.innerHTML = "";
-				slider.classList = ['route-slider'];
-				slider.classList.add( Router.activeAnimaion.name);
-				
-			}
-			else {
-				//slider.innerHTML = html;
-				if (slider.classList) {
-					slider.classList.add(Router.activeAnimaion.name);
-				}
-				else {
-				 	slider.className += ' '+ Router.activeAnimaion.name;
-				}
-			}
+			slider.innerHTML = "";
+			slider.classList.add(Router.activeAnimaion.name);
+
+			/* without timeout animation will be bind */
 			setTimeout(function() {
 				slider.innerHTML = html;
 				slider.classList.add("slide");
-			},200)
+				if(allSlider.length > 0) {
+					for(let i=0;i<allSlider.length;i++) {
+						if(Number(allSlider[i].getAttribute('data-route-index')) !== Router.currentRoute.index) {
+							allSlider[i].classList = ["route-slider"];
+						}
+					}
+				}
+			},300)
 		}
 
 		/* 
@@ -131,7 +133,8 @@
 		pop: function() {
 			if(this.currentRoute.index > 0) {
 				this.activeAnimaion = this.animations.pop;
-				this.go('', this.currentRoute.index - 1);
+				this.currentRoute = this.routes[this.currentRoute.index - 1];
+				this.go('', this.currentRoute.index);
 			}
 			else {
 				console.log("can't pop, no more routes to pop")
