@@ -1,3 +1,6 @@
+
+### Currently in development. Please do not use it in production. It will take some time to make it production ready. You can use for testing purpose.
+
 # Routerjs
 router for jquery
 Initially I am starting this project for providing routes in frontend like other framework(Angularjs,, Reactjs, Vue.js) but with a difference.
