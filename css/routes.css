@@ -19,14 +19,16 @@ body .router {
 }
 .route-slider.slide-from-left {
 	left: 100%;
+	width: 100%;
+
 }
 .route-slider.slide-from-right {
 	left: -100%;
+	width: 100%;
 }
 
 .route-slider.slide-from-left.slide,
 .route-slider.slide-from-right.slide {
-	width: 100%;
 	left: 0;
 	z-index: 1000 !important;
 }
