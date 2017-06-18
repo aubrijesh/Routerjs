@@ -32,24 +32,66 @@ Simple Example:
 ``` javascript
 $(document).ready(function() {
   var routes = [
-      {
-        name: 'first',
-        template: '#template-first',
-      },
-      {
-        name: 'second',
-        template: '#template-second',
-      },
-      {
-        name: 'third',
-        template: "#template-third"
-      },
-      {
-        name: 'fourth',
-        template: "#template-fourth"
-      }
-    ];
-    Router.init(routes);
+		{
+			name: 'first',
+			template: '#template-first',
+			render: function() {
+				/* 
+					return promise data  here that your will be able to get in template 
+				*/
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'second',
+			template: '#template-second',
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'third',
+			template: "#template-third",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'fourth',
+			template: "#template-fourth",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		}
+	];
+	Router.init({
+		routes: routes,
+		animations: {
+			push: {
+				name: 'slide-from-left'
+			},
+			pop: {
+				name: 'slide-from-right'
+			}
+		},
+		beforeLoadAnimation: true
+	});
   }); 
   ```
   
