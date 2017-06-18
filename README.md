@@ -103,7 +103,20 @@ You need to create your html template corresponding these routes. Like first rou
 <template id="template-first">
 </template>
 ```
+### Route render function:
 In render function we need to return promise data to context that we can access in corresponding route template and using handlerbar template syntax we can render it.
+
+If you want to send static data to template you need to promise syntax as render function only accept promise data. You can send static as like below.
+
+``` javascript
+var routerObj = {name: 'routerjs'}
+return new Promise((resolve, reject) => {
+    resolve(routerObj);
+});
+```
+
+Now you will be able to access your routerObj in corresponding route template.
+
 
 On load of html page your first route template will be render.
 
