@@ -125,6 +125,3 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
-  
-### Passing data to render function
-In progress, we will come back soon. Stay tuned.
