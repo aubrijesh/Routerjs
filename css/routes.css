@@ -1,0 +1,32 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+body .router {
+	height: 100%;
+}
+/* for animation of route */
+.route-slider {
+	position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    box-sizing: border-box;
+    text-align: justify;
+    transition: all .5s cubic-bezier(0,.69,.96,.85);
+}
+.route-slider.slide-from-left {
+	left: 100%;
+}
+.route-slider.slide-from-right {
+	left: -100%;
+}
+
+.route-slider.slide-from-left.slide,
+.route-slider.slide-from-right.slide {
+	width: 100%;
+	left: 0;
+	z-index: 1000 !important;
+}
