@@ -28,9 +28,6 @@
 		*/
 
 		render = function(templateId, el, data) {
-			var source   = $(templateId).html();
-			var template = hb.compile(source);
-			var html  = template(data);
 			var allSlider = document.getElementsByClassName('route-slider slide');
 			var slider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
 			if(!Router.activeAnimaion) {
@@ -39,9 +36,23 @@
 			slider.innerHTML = "";
 			slider.classList.add(Router.activeAnimaion.name);
 
+			if(Router.currentRoute.beforeLoadAnimation) {
+				$('.loader').css('display','block');
+			}
 			/* without timeout animation will not be bind */
-			setTimeout(function() {
+			Router.currentRoute.render().then(function(data) {
+				var source   = $(templateId).html();
+				var template = hb.compile(source);
+				var html  = template(data);
 				slider.innerHTML = html;
+				
+				if(Router.currentRoute.beforeLoadAnimation) {
+					$('.loader').css('display','none');
+				}
+			});
+
+
+			setTimeout(function() {
 				slider.classList.add("slide");
 				if(allSlider.length > 0) {
 					for(let i=0;i<allSlider.length;i++) {
@@ -50,7 +61,7 @@
 						}
 					}
 				}
-			},300)
+			},200);
 		}
 
 		/* 

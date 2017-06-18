@@ -30,3 +30,31 @@ body .router {
 	left: 0;
 	z-index: 1000 !important;
 }
+
+/* loader css */
+
+.loader {
+	border: 6px solid #e8e7e7;
+    border-radius: 50%;
+    border-top: 6px solid #2e8acc;
+    width: 40px;
+    height: 40px;
+    background-color: #f3f3f3;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    display: none;
+    z-index: 1001;
+    position: fixed;
+    margin-left: calc(50% - 20px);
+    margin-top: calc(100% - 20px);
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
