@@ -127,7 +127,6 @@
 			if(this.currentRoute === '') {
 				this.currentRoute = routes[0];
 			}
-
 			if(animations) {
 				this.animations = animations;
 			}

@@ -20,7 +20,7 @@ $(document).ready(function() {
 	Router.init(routes);
 	$('body').on('click','.next', function() {
 		Router.push();
-	})
+	});
 	$('body').on('click','.prev', function() {
 		Router.pop();
 	})
