@@ -21,6 +21,7 @@ Router initilization is simple, simply define your routes in an array with each 
 template will be rendered when given route matches.
 Simple Example:
 
+``` javascript
 $(document).ready(function() {
   var routes = [
       {
@@ -41,7 +42,7 @@ $(document).ready(function() {
       }
     ];
     Router.init(routes);
-  });
+  }); ````
   
 It is having four routes each route object having two key name and template. this template will be rendered when route matches with route object name.
 You need to create your html template corresponding these routes. Like first route refers template #template-first so we need to define html template in our html code as like below.
