@@ -58,7 +58,7 @@ You need to create your html template corresponding these routes. Like first rou
 </template>
 ```
 
-On load of html page your route template will be render.
+On load of html page your first route template will be render.
 
 # Route Navigation:
 
