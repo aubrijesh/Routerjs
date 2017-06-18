@@ -6,7 +6,7 @@ Beside routing,It will provide smooth transitions of pages. For most hybrid app 
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handler.js.
 
-# How to Use:
+## How to Use:
 
 Simply Include:
 routes.css, routes.js with dependancies(JQuery, Hanlderbar) to your html
@@ -20,7 +20,7 @@ routes.css, routes.js with dependancies(JQuery, Hanlderbar) to your html
 
 routes.css uses route-slider class name with position fixed and using z-index pages will be stacked and only current page will be on page. So you need to add this tiny css for providing base styling for your html.
 
-# Router Initilization:
+## Router Initilization:
 
 Router initilization is simple, simply define your routes in an array with each object having route name and template id.
 template will be rendered when given route matches.
@@ -60,14 +60,14 @@ You need to create your html template corresponding these routes. Like first rou
 
 On load of html page your first route template will be render.
 
-# Route Navigation:
+## Route Navigation:
 
   Route navigation is super easy. Routes.js provides two functions for moving forward and backward.
   
-  # Router.push();
+  ### Router.push();
   push function loads next routes to context and renders template associate with it.
   
-  # Router.pop()
+  ### Router.pop()
   pop current route and loads previous route to context and renders template associate with it.
 
   You can navigate using push and pop method by calling them in button click or on click of header navigation icons.
@@ -79,5 +79,5 @@ On load of html page your first route template will be render.
   });
   ```
   
-# Passing data to render function
+### Passing data to render function
 In progress, we will come back soon. Stay tuned.
