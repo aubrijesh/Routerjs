@@ -1,5 +1,5 @@
 
-### Currently in development. Please do not use it in production. It will take some time to make it production ready. You can use for testing purpose.
+### Currently in development. Please do not use it in production. It will take some time to make it production ready.We will let you know once production build is ready. You can use for testing purpose for now.
 
 # Routerjs
 router for jquery
