@@ -1,6 +1,13 @@
 (function($, hb) {
 	initilization = function() {
 		var pushState = history.pushState;
+
+		/* 
+			Added By: Brijesh Kumar
+			Date: 17/05/2017
+			Description: For creating route-containers for each route 
+			where route template will be rendered
+		*/
 		createElements = function() {
 			var routerLen = Router.routes.length;
 			for(let i=0;i<Router.routes.length; i++) {
@@ -13,7 +20,13 @@
 			}
 		}
 		createElements();
-		/* for rendering of matched route template */
+
+		/* 
+			Added By: Brijesh Kumar
+			Date: 17/05/2017
+			Descriptio: For rendering template using hanlderbar templating system
+		*/
+
 		render = function(templateId, el, data) {
 			var source   = $(templateId).html();
 			var template = hb.compile(source);
@@ -26,7 +39,7 @@
 			slider.innerHTML = "";
 			slider.classList.add(Router.activeAnimaion.name);
 
-			/* without timeout animation will be bind */
+			/* without timeout animation will not be bind */
 			setTimeout(function() {
 				slider.innerHTML = html;
 				slider.classList.add("slide");
@@ -41,7 +54,10 @@
 		}
 
 		/* 
-			on history change callback 
+			Added By: Brijesh Kumar
+			Date: 17/05/2017
+			Description: on history change callback , onHistoryChange will called when hash value changes
+			arguments: arguments (hash arguments, isReload)
 		*/
 
 		onHistoryChange = function(arguments, isReload) {
@@ -77,6 +93,13 @@
 	    	Router.currentRoute = getRouteObject(window.location.hash.replace("#",''));
 	    }
 	};
+
+	/*  
+		added By: Brijesh Kumar
+		Date: 17/05/2017
+		Description: for getting route object using routeName
+	*/
+
 	getRouteObject = function(routeName) {
 		var obj = '';
 		for(let i=0; i<Router.routes.length; i++) {
@@ -86,6 +109,7 @@
 		}
 		return obj;
 	};
+
 	window.Router =  {
 		routes: [],
 		currentRoute: '',
@@ -100,12 +124,15 @@
 		},
 		init: function(routes, animations=null) {
 			this.routes = routes.map(function(obj, index) { obj['index'] = index ; return obj });
-			this.currentRoute = routes[0];
+			if(this.currentRoute === '') {
+				this.currentRoute = routes[0];
+			}
+
 			if(animations) {
 				this.animations = animations;
 			}
 			initilization();
-			this.go('',0);
+			this.go('',this.currentRoute.index);
 		},
 		go: function(routeName, routeIndex = null) {
 			var routeObject = '';
