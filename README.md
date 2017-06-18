@@ -9,9 +9,12 @@ From templating I am using handlerbar. So for now dependency is JQuery and Handl
 # How to Use:
 
 Simply Include:
-routes.css, routes.js to your html
+routes.css, routes.js with dependancies(JQuery, Hanlderbar) to your html
 ``` html
 <link rel="stylesheet" type="text/css" href="css/routes.css">
+
+<script type="text/javascript" src="js/jquery-min.js"></script>
+<script type="text/javascript" src="js/handlebars-v4.0.10.js"></script>
 <script type="text/javascript" src="js/routes.js"></script>
 ```
 
