@@ -4,7 +4,7 @@ Initially I am starting this project for providing routes in frontend like other
 The user will be able to use it with JQuery and other JQuery plugins. It will provide simple, minimal and elegent solution for creating single page app using most loved library that is JQuery.
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
-Fom templating, I am using handlerbar. So for now dependency is JQuery and Handler.js.
+Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
 
 ## How to Use:
 
