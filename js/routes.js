@@ -36,7 +36,7 @@
 			slider.innerHTML = "";
 			slider.classList.add(Router.activeAnimaion.name);
 
-			if(Router.currentRoute.beforeLoadAnimation) {
+			if(Router.beforeLoadAnimation) {
 				$('.loader').css('display','block');
 			}
 			/* without timeout animation will not be bind */
@@ -45,8 +45,8 @@
 				var template = hb.compile(source);
 				var html  = template(data);
 				slider.innerHTML = html;
-				
-				if(Router.currentRoute.beforeLoadAnimation) {
+
+				if(Router.beforeLoadAnimation) {
 					$('.loader').css('display','none');
 				}
 			});
@@ -125,6 +125,7 @@
 		routes: [],
 		currentRoute: '',
 		activeAnimaion: '',
+		beforeLoadAnimation: true,
 		animations: {
 			push: {
 				name: 'slide-from-left'
@@ -133,13 +134,13 @@
 				name: 'slide-from-right'
 			}
 		},
-		init: function(routes, animations=null) {
-			this.routes = routes.map(function(obj, index) { obj['index'] = index ; return obj });
+		init: function(configuration) {
+			this.routes = configuration.routes.map(function(obj, index) { obj['index'] = index ; return obj });
 			if(this.currentRoute === '') {
-				this.currentRoute = routes[0];
+				this.currentRoute = configuration.routes[0];
 			}
-			if(animations) {
-				this.animations = animations;
+			if(configuration.animations) {
+				this.animations = configuration.animations;
 			}
 			initilization();
 			this.go('',this.currentRoute.index);

@@ -3,7 +3,6 @@ $(document).ready(function() {
 		{
 			name: 'first',
 			template: '#template-first',
-			beforeLoadAnimation: true,
 			render: function() {
 				var data = {
 					name: 'first template',
@@ -12,14 +11,13 @@ $(document).ready(function() {
 				return new Promise((resolve, reject) => {
 				  setTimeout(function(){
 				    resolve(data);
-				  }, 2000);
+				  }, 0);
 				});
 			}
 		},
 		{
 			name: 'second',
 			template: '#template-second',
-			beforeLoadAnimation: true,
 			render: function() {
 				var data = {
 					name: 'second template',
@@ -28,14 +26,13 @@ $(document).ready(function() {
 				return new Promise((resolve, reject) => {
 				  setTimeout(function(){
 				    resolve(data);
-				  }, 2000);
+				  }, 0);
 				});
 			}
 		},
 		{
 			name: 'third',
 			template: "#template-third",
-			beforeLoadAnimation: true,
 			render: function() {
 				var data = {
 					name: 'third template',
@@ -44,14 +41,13 @@ $(document).ready(function() {
 				return new Promise((resolve, reject) => {
 				  setTimeout(function() {
 				    resolve(data);
-				  }, 2000);
+				  }, 0);
 				});
 			}
 		},
 		{
 			name: 'fourth',
 			template: "#template-fourth",
-			beforeLoadAnimation: true,
 			render: function() {
 				var data = {
 					name: 'fourth template',
@@ -60,12 +56,23 @@ $(document).ready(function() {
 				return new Promise((resolve, reject) => {
 				  setTimeout(function(){
 				    resolve(data);
-				  }, 2000);
+				  }, 0);
 				});
 			}
 		}
 	];
-	Router.init(routes);
+	Router.init({
+		routes: routes,
+		animations: {
+			push: {
+				name: 'slide-from-left'
+			},
+			pop: {
+				name: 'slide-from-right'
+			}
+		},
+		beforeLoadAnimation: true
+	});
 	$('body').on('click','.next', function() {
 		Router.push();
 	});
