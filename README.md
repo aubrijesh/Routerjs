@@ -103,6 +103,7 @@ You need to create your html template corresponding these routes. Like first rou
 <template id="template-first">
 </template>
 ```
+In render function we need to return promise data to context that we can access in corresponding route template and using handlerbar template syntax we can render it.
 
 On load of html page your first route template will be render.
 
