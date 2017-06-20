@@ -56,7 +56,7 @@ $(document).ready(function() {
 				return new Promise((resolve, reject) => {
 				  setTimeout(function(){
 				    resolve(data);
-				  }, 0);
+				  }, 2000);
 				});
 			}
 		}
@@ -71,7 +71,13 @@ $(document).ready(function() {
 				name: 'slide-from-right'
 			}
 		},
-		beforeLoadAnimation: true
+		beforeLoadAnimation: true,
+		showLoader: function() {
+			$('.loader').css('display','block');
+		},
+		hideLoader: function() {
+			$('.loader').css('display','none');
+		} 
 	});
 	$('body').on('click','.next', function() {
 		Router.push();

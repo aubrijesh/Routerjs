@@ -32,24 +32,67 @@ Simple Example:
 ``` javascript
 $(document).ready(function() {
   var routes = [
-      {
-        name: 'first',
-        template: '#template-first',
-      },
-      {
-        name: 'second',
-        template: '#template-second',
-      },
-      {
-        name: 'third',
-        template: "#template-third"
-      },
-      {
-        name: 'fourth',
-        template: "#template-fourth"
-      }
-    ];
-    Router.init(routes);
+		{
+			name: 'first',
+			template: '#template-first',
+			render: function() {
+				/* 
+					return promise data  here that your will be able to get in template 
+				*/
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'second',
+			template: '#template-second',
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'third',
+			template: "#template-third",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'fourth',
+			template: "#template-fourth",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		}
+	];
+	Router.init({
+		routes: routes,
+		animations: {
+			push: {
+				name: 'slide-from-left'
+			},
+			pop: {
+				name: 'slide-from-right'
+			}
+		},
+		beforeLoadAnimation: true
+	});
+	
   }); 
   ```
   
@@ -60,6 +103,20 @@ You need to create your html template corresponding these routes. Like first rou
 <template id="template-first">
 </template>
 ```
+### Route render function:
+In render function we need to return promise data to context that we can access in corresponding route template and using handlerbar template syntax we can render it.
+
+If you want to send static data to template you need to promise syntax as render function only accept promise data. You can send static as like below.
+
+``` javascript
+var routerObj = {name: 'routerjs'}
+return new Promise((resolve, reject) => {
+    resolve(routerObj);
+});
+```
+
+Now you will be able to access your routerObj in corresponding route template.
+
 
 On load of html page your first route template will be render.
 
@@ -81,6 +138,3 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
-  
-### Passing data to render function
-In progress, we will come back soon. Stay tuned.

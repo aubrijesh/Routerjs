@@ -37,7 +37,7 @@
 			slider.classList.add(Router.activeAnimaion.name);
 
 			if(Router.beforeLoadAnimation) {
-				$('.loader').css('display','block');
+				Router.showLoader();
 			}
 			/* without timeout animation will not be bind */
 			Router.currentRoute.render().then(function(data) {
@@ -47,7 +47,7 @@
 				slider.innerHTML = html;
 
 				if(Router.beforeLoadAnimation) {
-					$('.loader').css('display','none');
+					Router.hideLoader();
 				}
 			});
 
@@ -134,6 +134,14 @@
 				name: 'slide-from-right'
 			}
 		},
+		showLoader: function() {
+			/* for giving functionality to user for showing his loader,
+			he can do any stuff for showing loader */
+		},
+		hideLoader: function() {
+			/* for giving functionality to user for hiding his loader,
+			he can do any stuff for hiding loader */
+		},
 		init: function(configuration) {
 			this.routes = configuration.routes.map(function(obj, index) { obj['index'] = index ; return obj });
 			if(this.currentRoute === '') {
@@ -141,6 +149,12 @@
 			}
 			if(configuration.animations) {
 				this.animations = configuration.animations;
+			}
+			if(configuration.showLoader) {
+				this.showLoader = configuration.showLoader;
+			}
+			if(configuration.hideLoader) {
+				this.hideLoader = configuration.hideLoader;
 			}
 			initilization();
 			this.go('',this.currentRoute.index);
