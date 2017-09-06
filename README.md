@@ -83,12 +83,8 @@ $(document).ready(function() {
 	Router.init({
 		routes: routes,
 		animations: {
-			push: {
-				name: 'slide-from-left'
-			},
-			pop: {
-				name: 'slide-from-right'
-			}
+			push: 'slide-to-left',
+			pop: 'slide-to-right'
 		},
 		beforeLoadAnimation: true
 	});
