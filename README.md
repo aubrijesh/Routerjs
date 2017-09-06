@@ -9,7 +9,7 @@ Beside routing,It will provide smooth transitions of pages. For most hybrid app 
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
   
-### Check Live Examples: http://blog.jquery-router.softagreement.com/
+### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
 
