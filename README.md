@@ -1,6 +1,6 @@
 
 ### Currently in development. Please do not use it in production. It will take some time to make it production ready.We will let you know once production build is ready. You can use for testing purpose for now.
-# Check Live Examples: http://blog.jquery-router.softagreement.com/ 
+	
 # Routerjs
 router for jquery
 Initially I am starting this project for providing routes in frontend like other framework(Angularjs,, Reactjs, Vue.js) but with a difference.
@@ -134,3 +134,6 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
+  
+# Check Live Examples:
+	http://blog.jquery-router.softagreement.com/
