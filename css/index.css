@@ -1,3 +1,20 @@
+section.red {
+	background-color: #963c3c;
+	color: white;
+}
+section.blue {
+	background-color: #424261;
+	color: white;
+}
+section.green {
+	background-color: #4c8e4c;
+	color: white;
+}
+section.gray {
+	background-color: #403f3f;
+	color: white;
+}
+
 section header {
 	display: flex;
 	flex-direction: row;
