@@ -8,6 +8,8 @@ The user will be able to use it with JQuery and other JQuery plugins. It will pr
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
+  
+### Check Live Examples: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
 
@@ -134,6 +136,4 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
-  
-# Check Live Examples:
-	http://blog.jquery-router.softagreement.com/
+
