@@ -136,7 +136,7 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
-  Animations combination you can use are:
+  Animations that you can try:
   
   ```
 	{
