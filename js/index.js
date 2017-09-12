@@ -86,7 +86,7 @@ $(document).ready(function() {
 	];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[3],
+		animations: newAnimations[2],
 		beforeLoadAnimation: false,
 		showLoader: function() {
 			$('.loader').css('display','block');

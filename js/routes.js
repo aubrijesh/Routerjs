@@ -150,69 +150,6 @@
 					});
 				}
 
-				// if(Router.currentOperation === "pop") {
-				// 	$(currentSlider)
-				// 		.removeClass("current-slider")
-				// 		.addClass("slide");
-
-
-				// 	setTimeout(function() {
-				// 		if(nextRouteIndex > -1) {
-				// 			$(moveToSlider)
-				// 				.next()
-				// 				.attr("class", "route-slider next-slider")
-				// 				.nextAll()
-				// 				.attr('class','route-slider');
-				// 		}
-				// 		if(previousRouteIndex > -1)
-				// 		{
-				// 			$(moveToSlider)
-				// 				.prev()
-				// 				.attr("class", "route-slider prev-slider")
-				// 				.prevAll()
-				// 				.attr('class','route-slider');
-				// 		}
-				// 		$(moveToSlider)
-				// 			.attr("class", "route-slider current-slider");
-				// 	}, 500);
-					
-
-				// 	$(moveToSlider)
-				// 		.attr("class", "route-slider current-slider"); 
-				// }
-				// else {
-				// 	$(moveToSlider)
-				// 		.prev()
-				// 		.addClass("prev-animation");
-						
-				// 	$(moveToSlider)
-				// 		.removeClass("next-slider")
-				// 		.addClass("slide");
-
-				// 	setTimeout(function() {
-				// 		if(nextRouteIndex > -1) {
-				// 			$(moveToSlider)
-				// 				.next()
-				// 				.attr("class", "route-slider next-slider")
-				// 				.nextAll()
-				// 				.attr('class','route-slider');
-				// 		}
-				// 		if(previousRouteIndex > -1)
-				// 		{
-				// 			$(moveToSlider)
-				// 				.removeClass("prev-slider")
-				// 				.prev()
-				// 				.attr("class", "route-slider prev-slider")
-				// 				.prevAll()
-				// 				.attr('class','route-slider');
-				// 		}
-
-				// 		$(moveToSlider)
-				// 			.attr("class", "route-slider current-slider");
-				// 	}, 500);
-					
-				// }
-
 			},200);
 		}
 
