@@ -1,6 +1,4 @@
 
-### Currently in development. Please do not use it in production. It will take some time to make it production ready.We will let you know once production build is ready. You can use for testing purpose for now.
-	
 # Routerjs
 router for jquery
 Initially I am starting this project for providing routes in frontend like other framework(Angularjs,, Reactjs, Vue.js) but with a difference.
@@ -22,8 +20,6 @@ routes.css, routes.js with dependancies(JQuery, Hanlderbar) to your html
 <script type="text/javascript" src="js/handlebars-v4.0.10.js"></script>
 <script type="text/javascript" src="js/routes.js"></script>
 ```
-
-routes.css uses route-slider class name with position fixed and using z-index pages will be stacked and only current page will be on page. So you need to add this tiny css for providing base styling for your html.
 
 ## Router Initilization:
 
