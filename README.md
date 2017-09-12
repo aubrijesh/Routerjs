@@ -154,5 +154,6 @@ On load of html page your first route template will be render.
 	{
 		push: 'right-to-left',
 		pop: 'left-to-right'
-	} ```
+	} 
+```
 
