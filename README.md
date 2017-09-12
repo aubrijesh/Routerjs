@@ -1,6 +1,6 @@
 
 ### Currently in development. Please do not use it in production. It will take some time to make it production ready.We will let you know once production build is ready. You can use for testing purpose for now.
-
+	
 # Routerjs
 router for jquery
 Initially I am starting this project for providing routes in frontend like other framework(Angularjs,, Reactjs, Vue.js) but with a difference.
@@ -8,6 +8,8 @@ The user will be able to use it with JQuery and other JQuery plugins. It will pr
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
+  
+### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
 
@@ -83,12 +85,8 @@ $(document).ready(function() {
 	Router.init({
 		routes: routes,
 		animations: {
-			push: {
-				name: 'slide-from-left'
-			},
-			pop: {
-				name: 'slide-from-right'
-			}
+			push: 'slide-to-left',
+			pop: 'slide-to-right'
 		},
 		beforeLoadAnimation: true
 	});
@@ -138,3 +136,4 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
+
