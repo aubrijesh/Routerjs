@@ -2,6 +2,7 @@ html, body {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
+    font-family: 'Roboto', sans-serif;
 }
 body .routes {
 	position: relative;
@@ -70,6 +71,7 @@ body .routes {
 	z-index: 1000 !important;
 }
 
+/* slide to top animation */
 
 .route-slider.slide-to-top {
     top: 100%;
@@ -86,6 +88,8 @@ body .routes {
    top: 100%;
    z-index: 1000 !important;
 }
+
+/* top to bottom animation */
 
 .route-slider.top-to-bottom {
     bottom: 100%;
