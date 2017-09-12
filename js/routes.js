@@ -12,14 +12,31 @@
 			var routerLen = Router.routes.length;
 			for(let i=0;i<Router.routes.length; i++) {
 				var newElmement = document.createElement('div');
-				var $routes = document.getElementById('routes');
+				var $routes = document.getElementsByClassName('routes-list')[0];
 				newElmement.classList = ['route-slider'];
-				newElmement.setAttribute('data-route-index',i);
-				newElmement.style.zIndex = (routerLen - i);
+				// newElmement.setAttribute('data-route-index',i);
+				// newElmement.style.zIndex = (routerLen - i);
 				$routes.appendChild(newElmement);
 			}
-		}
+		};
 		createElements();
+		whichTransitionEvent = function(){
+		  var t,
+		      el = document.createElement("fakeelement");
+
+		  var transitions = {
+		    "transition"      : "transitionend",
+		    "OTransition"     : "oTransitionEnd",
+		    "MozTransition"   : "transitionend",
+		    "WebkitTransition": "webkitTransitionEnd"
+		  }
+
+		  for (t in transitions){
+		    if (el.style[t] !== undefined){
+		      return transitions[t];
+		    }
+		  }
+		};
 
 		/* 
 			Added By: Brijesh Kumar
@@ -28,29 +45,175 @@
 		*/
 
 		render = function(templateId, el, data) {
-			var source   = $(templateId).html();
-			var template = hb.compile(source);
-			var html  = template(data);
 			var allSlider = document.getElementsByClassName('route-slider slide');
-			var slider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
+			var moveToSlider = document.getElementsByClassName('route-slider')[Router.routeTo.index];
+			var currentSlider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
+			
+			var previousRouteIndex = -1;
+			var nextRouteIndex = -1;
+			
+			if(Router.routeTo.index > 0)
+			{
+				previousRouteIndex = (Router.routeTo.index - 1)
+			}
+
+			if(Router.routeTo.index < (Router.routes.length - 1))  {
+				nextRouteIndex = (Router.routeTo.index + 1)
+			}
+
+
 			if(!Router.activeAnimaion) {
 				Router.activeAnimaion = Router.animations.push;
 			}
-			slider.innerHTML = "";
-			slider.classList.add(Router.activeAnimaion.name);
+			moveToSlider.innerHTML = "";
 
+
+			if(Router.currentOperation === "pop") {
+				$(currentSlider).addClass(Router.activeAnimaion);
+			}
+			else {
+				$(moveToSlider).addClass(Router.activeAnimaion);
+			}
+
+			
+			if(Router.beforeLoadAnimation) {
+				Router.showLoader();
+			}
 			/* without timeout animation will not be bind */
-			setTimeout(function() {
-				slider.innerHTML = html;
-				slider.classList.add("slide");
-				if(allSlider.length > 0) {
-					for(let i=0;i<allSlider.length;i++) {
-						if(Number(allSlider[i].getAttribute('data-route-index')) !== Router.currentRoute.index) {
-							allSlider[i].classList = ["route-slider"];
-						}
-					}
+			Router.routeTo.render().then(function(data) {
+				var source   = $(templateId).html();
+				var template = hb.compile(source);
+				var html  = template(data);
+				moveToSlider.innerHTML = html;
+
+				if(Router.beforeLoadAnimation) {
+					Router.hideLoader();
 				}
-			},300)
+			});
+
+			setTimeout(function() {
+				if(Router.currentOperation === "pop") {
+					$(currentSlider)
+						.removeClass("current-slider")
+						.addClass("slide");
+
+					$(currentSlider).one(whichTransitionEvent(),
+						function(event) {
+					    if(nextRouteIndex > -1) {
+							$(moveToSlider)
+								.next()
+								.attr("class", "route-slider next-slider")
+								.nextAll()
+								.attr('class','route-slider');
+						}
+						if(previousRouteIndex > -1)
+						{
+							$(moveToSlider)
+								.prev()
+								.attr("class", "route-slider prev-slider")
+								.prevAll()
+								.attr('class','route-slider');
+						}
+						$(moveToSlider)
+							.attr("class", "route-slider current-slider");
+					});
+				} else {
+					$(moveToSlider)
+							.prev()
+							.addClass("prev-animation");
+							
+					$(moveToSlider)
+						.removeClass("next-slider")
+						.addClass("slide");
+
+					$(moveToSlider).one(whichTransitionEvent(),
+						function(event) {
+						if(nextRouteIndex > -1) {
+							$(moveToSlider)
+								.next()
+								.attr("class", "route-slider next-slider")
+								.nextAll()
+								.attr('class','route-slider');
+						}
+						if(previousRouteIndex > -1)
+						{
+							$(moveToSlider)
+								.removeClass("prev-slider")
+								.prev()
+								.attr("class", "route-slider prev-slider")
+								.prevAll()
+								.attr('class','route-slider');
+						}
+
+						$(moveToSlider)
+							.attr("class", "route-slider current-slider");
+					});
+				}
+
+				// if(Router.currentOperation === "pop") {
+				// 	$(currentSlider)
+				// 		.removeClass("current-slider")
+				// 		.addClass("slide");
+
+
+				// 	setTimeout(function() {
+				// 		if(nextRouteIndex > -1) {
+				// 			$(moveToSlider)
+				// 				.next()
+				// 				.attr("class", "route-slider next-slider")
+				// 				.nextAll()
+				// 				.attr('class','route-slider');
+				// 		}
+				// 		if(previousRouteIndex > -1)
+				// 		{
+				// 			$(moveToSlider)
+				// 				.prev()
+				// 				.attr("class", "route-slider prev-slider")
+				// 				.prevAll()
+				// 				.attr('class','route-slider');
+				// 		}
+				// 		$(moveToSlider)
+				// 			.attr("class", "route-slider current-slider");
+				// 	}, 500);
+					
+
+				// 	$(moveToSlider)
+				// 		.attr("class", "route-slider current-slider"); 
+				// }
+				// else {
+				// 	$(moveToSlider)
+				// 		.prev()
+				// 		.addClass("prev-animation");
+						
+				// 	$(moveToSlider)
+				// 		.removeClass("next-slider")
+				// 		.addClass("slide");
+
+				// 	setTimeout(function() {
+				// 		if(nextRouteIndex > -1) {
+				// 			$(moveToSlider)
+				// 				.next()
+				// 				.attr("class", "route-slider next-slider")
+				// 				.nextAll()
+				// 				.attr('class','route-slider');
+				// 		}
+				// 		if(previousRouteIndex > -1)
+				// 		{
+				// 			$(moveToSlider)
+				// 				.removeClass("prev-slider")
+				// 				.prev()
+				// 				.attr("class", "route-slider prev-slider")
+				// 				.prevAll()
+				// 				.attr('class','route-slider');
+				// 		}
+
+				// 		$(moveToSlider)
+				// 			.attr("class", "route-slider current-slider");
+				// 	}, 500);
+					
+				// }
+
+			},200);
 		}
 
 		/* 
@@ -60,38 +223,38 @@
 			arguments: arguments (hash arguments, isReload)
 		*/
 
-		onHistoryChange = function(arguments, isReload) {
-			console.log(arguments);
-			if(isReload) {
-				var currentUrl = arguments.replace("#",'');
-			}
-			else {
-				var currentUrl = arguments[2].replace("#",'');
-			}
-			var currentRoute = Router.routes.filter(function(route, index){
-				return route.name === currentUrl;
-			})[0];
+		// onHistoryChange = function(arguments, isReload) {
+		// 	console.log(arguments);
+		// 	if(isReload) {
+		// 		var currentUrl = arguments.replace("#",'');
+		// 	}
+		// 	else {
+		// 		var currentUrl = arguments[2].replace("#",'');
+		// 	}
+		// 	var currentRoute = Router.routes.filter(function(route, index){
+		// 		return route.name === currentUrl;
+		// 	})[0];
 			
-			$('body')
-				.find('.route-link')
-				.removeClass('active')
-				.siblings('.route-link[data-route='+currentUrl + ']')
-				.addClass('active');
-			render(currentRoute.template,$("#route-content"),[]);
-		};
+		// 	$('body')
+		// 		.find('.route-link')
+		// 		.removeClass('active')
+		// 		.siblings('.route-link[data-route='+currentUrl + ']')
+		// 		.addClass('active');
+		// 	render(currentRoute.template,$("#route-content"),[]);
+		// };
 		
-	    history.pushState = function(state) {
-	        if (typeof history.onpushstate == "function") {
-	            history.onpushstate({state: state});
-	        }
-	        pushState.apply(history, arguments, onHistoryChange(arguments,false));
-	    };
+	 //    history.pushState = function(state) {
+	 //        if (typeof history.onpushstate == "function") {
+	 //            history.onpushstate({state: state});
+	 //        }
+	 //        pushState.apply(history, arguments, onHistoryChange(arguments,false));
+	 //    };
 
-	    /* on reload of page regain content of current active route */
-	    if(window.location.hash) {
-	    	onHistoryChange(window.location.hash,true);
-	    	Router.currentRoute = getRouteObject(window.location.hash.replace("#",''));
-	    }
+	 //    /* on reload of page regain content of current active route */
+	 //    if(window.location.hash) {
+	 //    	onHistoryChange(window.location.hash,true);
+	 //    	Router.currentRoute = getRouteObject(window.location.hash.replace("#",''));
+	 //    }
 	};
 
 	/*  
@@ -113,44 +276,69 @@
 	window.Router =  {
 		routes: [],
 		currentRoute: '',
+		routeTo: '',
+		currentOperation: '',
 		activeAnimaion: '',
+		beforeLoadAnimation: true,
 		animations: {
-			push: {
-				name: 'slide-from-left'
-			},
-			pop: {
-				name: 'slide-from-right'
-			}
+			push: 'slide-from-left',
+			pop: 'slide-from-right'
 		},
-		init: function(routes, animations=null) {
-			this.routes = routes.map(function(obj, index) { obj['index'] = index ; return obj });
+		showLoader: function() {
+			/* for giving functionality to user for showing his loader,
+			he can do any stuff for showing loader */
+		},
+		hideLoader: function() {
+			/* for giving functionality to user for hiding his loader,
+			he can do any stuff for hiding loader */
+		},
+		init: function(configuration) {
+			this.routes = configuration.routes.map(function(obj, index) { obj['index'] = index ; return obj });
 			if(this.currentRoute === '') {
-				this.currentRoute = routes[0];
+				this.currentRoute = configuration.routes[0];
+				this.routeTo = configuration.routes[0];
 			}
-			if(animations) {
-				this.animations = animations;
+			if(configuration.animations) {
+				this.animations = configuration.animations;
+			}
+			if(configuration.showLoader) {
+				this.showLoader = configuration.showLoader;
+			}
+			if(configuration.hideLoader) {
+				this.hideLoader = configuration.hideLoader;
 			}
 			initilization();
-			this.go('',this.currentRoute.index);
+			this.go('',this.currentRoute.index, this.routeTo.index);
 		},
-		go: function(routeName, routeIndex = null) {
+		go: function(routeName, currentRouteIndex, routeToIndex) {
 			var routeObject = '';
-			if(routeIndex === null) {
+			if(this.currentOperation == "") {
+				this.currentOperation = "push";
+			}
+			if(routeToIndex === null) {
 				routeObject = getRouteObject(routeName);
 			}
 			else {
-				routeObject = this.routes[routeIndex];
+				routeObject = this.routes[routeToIndex];
 			}
-			if(routeObject !== '') {
-				history.pushState(null,null,"#"+routeObject.name);
-				this.currentRoute = routeObject;
-			}
+			render(this.routeTo.template,$("#route-content"),[]);
+			this.currentRoute = this.routeTo;
+			// if(routeObject !== '') {
+			// 	history.pushState(null,null,"#"+routeObject.name);
+			// }
 		},
 		push: function() {
+			var currentRouteIndex = $(".route-slider.current-slider").index();
+			var routeToIndex = $(".route-slider.next-slider").index();
+
+			this.currentRoute = this.routes[currentRouteIndex];
+			this.routeTo = this.routes[routeToIndex];
+
 			if(this.currentRoute.index < (this.routes.length - 1)) {
-				this.currentRoute = this.routes[this.currentRoute.index + 1];
+				this.routeTo = this.routes[this.currentRoute.index + 1];
 				this.activeAnimaion = this.animations.push;
-				this.go('', this.currentRoute.index);
+				this.currentOperation = "push";
+				this.go('', this.currentRoute.index, this.routeTo.index);
 			}
 			else {
 				console.log("can't push, no next route");
@@ -159,8 +347,9 @@
 		pop: function() {
 			if(this.currentRoute.index > 0) {
 				this.activeAnimaion = this.animations.pop;
-				this.currentRoute = this.routes[this.currentRoute.index - 1];
-				this.go('', this.currentRoute.index);
+				this.routeTo = this.routes[this.currentRoute.index - 1];
+				this.currentOperation = "pop";
+				this.go('',this.currentRoute.index, this.routeTo.index);
 			}
 			else {
 				console.log("can't pop, no more routes to pop")

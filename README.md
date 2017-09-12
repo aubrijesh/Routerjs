@@ -1,6 +1,6 @@
 
 ### Currently in development. Please do not use it in production. It will take some time to make it production ready.We will let you know once production build is ready. You can use for testing purpose for now.
-
+	
 # Routerjs
 router for jquery
 Initially I am starting this project for providing routes in frontend like other framework(Angularjs,, Reactjs, Vue.js) but with a difference.
@@ -8,6 +8,8 @@ The user will be able to use it with JQuery and other JQuery plugins. It will pr
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently only Slide from left and slide from right animation is supported. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
+  
+### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
 
@@ -32,24 +34,63 @@ Simple Example:
 ``` javascript
 $(document).ready(function() {
   var routes = [
-      {
-        name: 'first',
-        template: '#template-first',
-      },
-      {
-        name: 'second',
-        template: '#template-second',
-      },
-      {
-        name: 'third',
-        template: "#template-third"
-      },
-      {
-        name: 'fourth',
-        template: "#template-fourth"
-      }
-    ];
-    Router.init(routes);
+		{
+			name: 'first',
+			template: '#template-first',
+			render: function() {
+				/* 
+					return promise data  here that your will be able to get in template 
+				*/
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'second',
+			template: '#template-second',
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'third',
+			template: "#template-third",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		},
+		{
+			name: 'fourth',
+			template: "#template-fourth",
+			render: function() {
+				return $.ajax({
+					url: 'http://abc.com/users',
+					method: 'get',
+					data: {id: 1}
+				});
+			}
+		}
+	];
+	Router.init({
+		routes: routes,
+		animations: {
+			push: 'slide-to-left',
+			pop: 'slide-to-right'
+		},
+		beforeLoadAnimation: true
+	});
+	
   }); 
   ```
   
@@ -60,6 +101,20 @@ You need to create your html template corresponding these routes. Like first rou
 <template id="template-first">
 </template>
 ```
+### Route render function:
+In render function we need to return promise data to context that we can access in corresponding route template and using handlerbar template syntax we can render it.
+
+If you want to send static data to template you need to promise syntax as render function only accept promise data. You can send static as like below.
+
+``` javascript
+var routerObj = {name: 'routerjs'}
+return new Promise((resolve, reject) => {
+    resolve(routerObj);
+});
+```
+
+Now you will be able to access your routerObj in corresponding route template.
+
 
 On load of html page your first route template will be render.
 
@@ -81,6 +136,4 @@ On load of html page your first route template will be render.
 	Router.push();
   });
   ```
-  
-### Passing data to render function
-In progress, we will come back soon. Stay tuned.
+
