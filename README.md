@@ -157,9 +157,9 @@ On load of html page your first route template will be render.
   
   Example:
   ``` javascript
-  $('body').on('click','.next', function() {
-	Router.push();
-  });
+	'click, .next': function() {
+		Router.push();
+	},
   ```
   Animations that you can try:
   
