@@ -36,8 +36,9 @@ $(document).ready(function() {
 		},
 		events: {
 			'click, .btn-update': function(el) {
-				this.currentRoute.data.user_list[5].first_name ="changed first name";
-				this.currentRoute.update();
+				this.data.user_list[5].first_name ="changed first name";
+				this.methods.firstFunction(); // you can call function using this, this will refer to current router object
+				this.update(); // need to call update as handlerbar template will update automatically
 			}
 		}
 	};

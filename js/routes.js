@@ -233,7 +233,7 @@
 						if(typeof fun === 'string') {
 							fun = this.routes[i].methods[fun];
 						}
-						bindFun = fun.bind(this);
+						bindFun = fun.bind(this.routes[i]);
 						$('body').on(event,target,bindFun);
 					}
 				}
