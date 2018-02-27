@@ -39,7 +39,10 @@ $(document).ready(function() {
 				this.data.user_list[5].first_name ="changed first name";
 				this.methods.firstFunction(); // you can call function using this, this will refer to current router object
 				this.update(); // need to call update as handlerbar template will update automatically
-			}
+			},
+			'click, .row': function(el) {
+				Router.push();
+			},
 		}
 	};
 
@@ -78,6 +81,17 @@ $(document).ready(function() {
 		routes: routes,
 		animations: newAnimations[3],
 		beforeLoadAnimation: false,
+		methods: {
+			
+		},
+		events: {
+			'click, .next': function() {
+				Router.push();
+			},
+			'click, .prev': function() {
+				Router.pop();
+			}
+		},
 		showLoader: function() {
 			$('.loader').css('display','block');
 		},
@@ -85,10 +99,4 @@ $(document).ready(function() {
 			$('.loader').css('display','none');
 		} 
 	});
-	$('body').on('click','.next', function() {
-		Router.push();
-	});
-	$('body').on('click','.prev', function() {
-		Router.pop();
-	})
 });

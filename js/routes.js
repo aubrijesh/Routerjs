@@ -206,7 +206,9 @@
 			});
 			
 			/* bind events */
-			
+			this.events = configuration.events || {};
+			this.methods = configuration.methods || {};
+
 			if(this.currentRoute === '') {
 				this.currentRoute = configuration.routes[0];
 				this.routeTo = configuration.routes[0];
@@ -221,6 +223,23 @@
 				this.hideLoader = configuration.hideLoader;
 			}
 			initilization();
+
+			/* bind events */
+			
+			if(configuration.events) {
+				for(key in configuration.events) {
+					var keySplit = key.split(",");
+					var target = keySplit[1].trim();
+					var event = keySplit[0].trim();
+					var fun = configuration.events[key];
+					var bindFun = "";
+					if(typeof fun === 'string') {
+						fun = configuration.events[i].methods[fun];
+					}
+					bindFun = fun.bind(this);
+					$('body').on(event,target,bindFun);
+				}
+			}
 			this.go('',this.currentRoute.index, this.routeTo.index);
 			for(var i=0;i<this.routes.length; i++) {
 				if(this.routes[i].events) {
