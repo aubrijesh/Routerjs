@@ -20,25 +20,31 @@
 	</body>
 	<script type="text/javascript" src="js/jquery-min.js"></script>
 	<script type="text/javascript" src="js/handlebars-v4.0.10.js"></script>
+	<script type="text/javascript" src="js/users.js"></script>
 	<script type="text/javascript" src="js/routes.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<template id="template-first">
 		<section class="first-template red">
 			<header>
 				<div class="next">
-					<img src="image/next-white.png" />
+					<img src="image/next.png" />
 				</div>
-				<h2>{{name}}</h2>
+				<h2>{{page_name}}</h2>
 			</header>
 			<div class="content">
-				<div class="item">
-					<span class="name">this is for first template</span>
-					<span>{{address}}</span>
-				</div>
-				<p>
-				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-				</p>
-				<h1> First page</h1>
+				{{#each user_list}}
+					<div class="row">
+						<div>
+							<h4 style="display: inline-block">First Name</h4>
+							: {{first_name}}
+						</div>
+						<div>
+							<h4 style="display: inline-block">Last Name</h4>
+							: {{last_name}}
+						</div>
+					</div>
+				{{/each}}
+				<button class="btn-update">Update Data</button>
 			</div>
 		</section>
 	</template>
@@ -46,11 +52,11 @@
 		<section class="second-template blue">
 			<header>
 				<div class="next">
-					<img src="image/next-white.png" />
+					<img src="image/next.png" />
 				</div>
 				<h2>{{name}}</h2>
 				<div class="prev">
-					<img src="image/back-white.png" />
+					<img src="image/back.png" />
 				</div>
 			</header>
 			<div class="content">
@@ -69,11 +75,11 @@
 		<section class="third-template green">
 			<header>
 				<div class="next">
-					<img src="image/next-white.png" />
+					<img src="image/next.png" />
 				</div>
 				<h2>{{name}}</h2>
 				<div class="prev">
-					<img src="image/back-white.png" />
+					<img src="image/back.png" />
 				</div>
 			</header>
 			<div class="content">
@@ -92,7 +98,7 @@
 		<section class="fourth-template gray">
 			<header>
 				<div class="prev">
-					<img src="image/back-white.png" />
+					<img src="image/back.png" />
 				</div>
 				<h2>{{name}}</h2>
 			</header>

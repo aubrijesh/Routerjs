@@ -10,10 +10,10 @@
 		*/
 		createElements = function() {
 			var routerLen = Router.routes.length;
-			for(let i=0;i<Router.routes.length; i++) {
+			for(var i=0;i<Router.routes.length; i++) {
 				var newElmement = document.createElement('div');
 				var $routes = document.getElementsByClassName('routes-list')[0];
-				newElmement.classList = ['route-slider'];
+				newElmement.className = 'route-slider';
 				// newElmement.setAttribute('data-route-index',i);
 				// newElmement.style.zIndex = (routerLen - i);
 				$routes.appendChild(newElmement);
@@ -65,9 +65,7 @@
 			if(!Router.activeAnimaion) {
 				Router.activeAnimaion = Router.animations.push;
 			}
-			moveToSlider.innerHTML = "";
-
-
+			
 			if(Router.currentOperation === "pop") {
 				$(currentSlider).addClass(Router.activeAnimaion);
 			}
@@ -79,12 +77,16 @@
 			if(Router.beforeLoadAnimation) {
 				Router.showLoader();
 			}
-			/* without timeout animation will not be bind */
 
-			var source   = $(templateId).html();
-			var template = hb.compile(source);
-			var html  = template(data);
-			moveToSlider.innerHTML = html;
+			/* without timeout animation will not be bind */
+			if(!Router.currentRoute.renderAlways || !moveToSlider.innerHTML) {
+				if(!moveToSlider.innerHTML) {
+					var source   = $(templateId).html();
+					var template = hb.compile(source);
+					var html  = template(data);
+					moveToSlider.innerHTML = html;
+				}
+			}
 
 			if(Router.beforeLoadAnimation) {
 				Router.hideLoader();
@@ -150,47 +152,14 @@
 				}
 
 			},200);
+		},
+		updateTemplate = function() {
+			var currentSlider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
+			var source   = $(Router.currentRoute.template).html();
+			var template = hb.compile(source);
+			var html  = template(Router.currentRoute.data);
+			currentSlider.innerHTML = html;
 		}
-
-		/* 
-			Added By: Brijesh Kumar
-			Date: 17/05/2017
-			Description: on history change callback , onHistoryChange will called when hash value changes
-			arguments: arguments (hash arguments, isReload)
-		*/
-
-		// onHistoryChange = function(arguments, isReload) {
-		// 	console.log(arguments);
-		// 	if(isReload) {
-		// 		var currentUrl = arguments.replace("#",'');
-		// 	}
-		// 	else {
-		// 		var currentUrl = arguments[2].replace("#",'');
-		// 	}
-		// 	var currentRoute = Router.routes.filter(function(route, index){
-		// 		return route.name === currentUrl;
-		// 	})[0];
-			
-		// 	$('body')
-		// 		.find('.route-link')
-		// 		.removeClass('active')
-		// 		.siblings('.route-link[data-route='+currentUrl + ']')
-		// 		.addClass('active');
-		// 	render(currentRoute.template,$("#route-content"),[]);
-		// };
-		
-	 //    history.pushState = function(state) {
-	 //        if (typeof history.onpushstate == "function") {
-	 //            history.onpushstate({state: state});
-	 //        }
-	 //        pushState.apply(history, arguments, onHistoryChange(arguments,false));
-	 //    };
-
-	 //    /* on reload of page regain content of current active route */
-	 //    if(window.location.hash) {
-	 //    	onHistoryChange(window.location.hash,true);
-	 //    	Router.currentRoute = getRouteObject(window.location.hash.replace("#",''));
-	 //    }
 	};
 
 	/*  
@@ -201,7 +170,7 @@
 
 	getRouteObject = function(routeName) {
 		var obj = '';
-		for(let i=0; i<Router.routes.length; i++) {
+		for(var i=0; i<Router.routes.length; i++) {
 			if(Router.routes[i].name === routeName) {
 				obj = Router.routes[i];
 			}
@@ -229,7 +198,17 @@
 			he can do any stuff for hiding loader */
 		},
 		init: function(configuration) {
-			this.routes = configuration.routes.map(function(obj, index) { obj['index'] = index ; return obj });
+			var self = this;
+			this.routes = configuration.routes.map(function(obj, index) {
+				obj['index'] = index ; 
+				obj["update"] = self.update
+				return obj 
+			});
+			
+			/* bind events */
+			this.events = configuration.events || {};
+			this.methods = configuration.methods || {};
+
 			if(this.currentRoute === '') {
 				this.currentRoute = configuration.routes[0];
 				this.routeTo = configuration.routes[0];
@@ -244,11 +223,44 @@
 				this.hideLoader = configuration.hideLoader;
 			}
 			initilization();
+
+			/* bind events */
+			
+			if(configuration.events) {
+				for(key in configuration.events) {
+					var keySplit = key.split(",");
+					var target = keySplit[1].trim();
+					var event = keySplit[0].trim();
+					var fun = configuration.events[key];
+					var bindFun = "";
+					if(typeof fun === 'string') {
+						fun = configuration.events[i].methods[fun];
+					}
+					bindFun = fun.bind(this);
+					$('body').on(event,target,bindFun);
+				}
+			}
 			this.go('',this.currentRoute.index, this.routeTo.index);
+			for(var i=0;i<this.routes.length; i++) {
+				if(this.routes[i].events) {
+					for(key in this.routes[i].events) {
+						var keySplit = key.split(",");
+						var target = keySplit[1].trim();
+						var event = keySplit[0].trim();
+						var fun = this.routes[i].events[key];
+						var bindFun = "";
+						if(typeof fun === 'string') {
+							fun = this.routes[i].methods[fun];
+						}
+						bindFun = fun.bind(this.routes[i]);
+						$('body').on(event,target,bindFun);
+					}
+				}
+			}
 		},
 		go: function(routeName, currentRouteIndex, routeToIndex) {
 			var routeObject = '';
-			var templateData = this.routeTo.data();
+			var templateData = this.routeTo.data;
 			if(this.currentOperation == "") {
 				this.currentOperation = "push";
 			}
@@ -292,6 +304,9 @@
 			else {
 				console.log("can't pop, no more routes to pop")
 			}
+		},
+		update: function() {
+			updateTemplate();
 		}
 	}
 }(jQuery, Handlebars));
