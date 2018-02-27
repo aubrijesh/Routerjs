@@ -80,16 +80,15 @@
 				Router.showLoader();
 			}
 			/* without timeout animation will not be bind */
-			Router.routeTo.render().then(function(data) {
-				var source   = $(templateId).html();
-				var template = hb.compile(source);
-				var html  = template(data);
-				moveToSlider.innerHTML = html;
 
-				if(Router.beforeLoadAnimation) {
-					Router.hideLoader();
-				}
-			});
+			var source   = $(templateId).html();
+			var template = hb.compile(source);
+			var html  = template(data);
+			moveToSlider.innerHTML = html;
+
+			if(Router.beforeLoadAnimation) {
+				Router.hideLoader();
+			}
 
 			setTimeout(function() {
 				if(Router.currentOperation === "pop") {
@@ -249,6 +248,7 @@
 		},
 		go: function(routeName, currentRouteIndex, routeToIndex) {
 			var routeObject = '';
+			var templateData = this.routeTo.data();
 			if(this.currentOperation == "") {
 				this.currentOperation = "push";
 			}
@@ -258,7 +258,8 @@
 			else {
 				routeObject = this.routes[routeToIndex];
 			}
-			render(this.routeTo.template,$("#route-content"),[]);
+
+			render(this.routeTo.template,$("#route-content"),templateData);
 			this.currentRoute = this.routeTo;
 			// if(routeObject !== '') {
 			// 	history.pushState(null,null,"#"+routeObject.name);
