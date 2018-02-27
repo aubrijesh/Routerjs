@@ -28,15 +28,7 @@ body .routes {
 }
 /* for animation of route */
 .route-slider {
-	// position: fixed;
- //    left: 0;
- //    top: 0;
- //    bottom: 0;
- //    background-color: white;
- //    box-sizing: border-box;
- //    text-align: justify;
-    transition: all .5s cubic-bezier(0,.69,.96,.85);
-
+    transition: all .5s ease-in-out;
     display: block;
     height: 100%;
     width: 100%;
