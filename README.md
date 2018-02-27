@@ -29,65 +29,86 @@ Simple Example:
 
 ``` javascript
 $(document).ready(function() {
-  var routes = [
+	var newAnimations = [
+		{
+			push: 'slide-to-left',
+			pop: 'slide-to-right'
+		},
+		{
+			push: 'slide-to-top',
+			pop: 'slide-to-bottom'
+		},
+		{
+			push: 'top-to-bottom',
+			pop: 'bottom-to-top'
+		},
+		{
+			push: 'right-to-left',
+			pop: 'left-to-right'
+		}
+	];
+
+	var routes = [
 		{
 			name: 'first',
 			template: '#template-first',
-			render: function() {
-				/* 
-					return promise data  here that your will be able to get in template 
-				*/
-				return $.ajax({
-					url: 'http://abc.com/users',
-					method: 'get',
-					data: {id: 1}
-				});
+			data: function() {
+				return {
+					name: 'first template',
+					address: 'first template address'
+				};
 			}
 		},
 		{
 			name: 'second',
 			template: '#template-second',
-			render: function() {
-				return $.ajax({
-					url: 'http://abc.com/users',
-					method: 'get',
-					data: {id: 1}
-				});
+			data: function() {
+				return {
+					name: 'second template',
+					address: 'second template address'
+				};
 			}
 		},
 		{
 			name: 'third',
 			template: "#template-third",
-			render: function() {
-				return $.ajax({
-					url: 'http://abc.com/users',
-					method: 'get',
-					data: {id: 1}
-				});
+			data: function() {
+				return {
+					name: 'third template',
+					address: 'third template address'
+				};
 			}
 		},
 		{
 			name: 'fourth',
 			template: "#template-fourth",
-			render: function() {
-				return $.ajax({
-					url: 'http://abc.com/users',
-					method: 'get',
-					data: {id: 1}
-				});
+			data: function() {
+				return {
+					name: 'fourth template',
+					address: 'fourth template address'
+				};
 			}
 		}
 	];
 	Router.init({
 		routes: routes,
-		animations: {
-			push: 'slide-to-left',
-			pop: 'slide-to-right'
+		animations: newAnimations[3],
+		beforeLoadAnimation: false,
+		showLoader: function() {
+			$('.loader').css('display','block');
 		},
-		beforeLoadAnimation: true
+		hideLoader: function() {
+			$('.loader').css('display','none');
+		} 
 	});
 	
-  }); 
+	$('body').on('click','.next', function() {
+		Router.push();
+	});
+	$('body').on('click','.prev', function() {
+		Router.pop();
+	})
+});
   ```
   
 It is having four routes each route object having two key name and template. this template will be rendered when route matches with route object name.
@@ -97,20 +118,8 @@ You need to create your html template corresponding these routes. Like first rou
 <template id="template-first">
 </template>
 ```
-### Route render function:
-In render function we need to return promise data to context that we can access in corresponding route template and using handlerbar template syntax we can render it.
-
-If you want to send static data to template you need to promise syntax as render function only accept promise data. You can send static as like below.
-
-``` javascript
-var routerObj = {name: 'routerjs'}
-return new Promise((resolve, reject) => {
-    resolve(routerObj);
-});
-```
-
-Now you will be able to access your routerObj in corresponding route template.
-
+### Route data function:
+Simply return data in {}.
 
 On load of html page your first route template will be render.
 
