@@ -6,7 +6,10 @@ The user will be able to use it with JQuery and other JQuery plugins. It will pr
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently we have four transitions. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
-  
+#### Routerjs in action
+
+![alt text](https://github.com/aubrijesh/Routerjs/blob/master/image/rjanim.gif "Routerjs in action")
+
 ### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
