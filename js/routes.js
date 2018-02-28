@@ -8,14 +8,30 @@
 			Description: For creating route-containers for each route 
 			where route template will be rendered
 		*/
+		Array.prototype.diff = function(a) {
+		    return this.filter(function(i) {return a.indexOf(i) < 0;});
+		};
+		getRouteSlideByIndex = function(index) {
+			return document.getElementsByClassName('route-slider')[index];
+		};
+		$.fn.removeClassExceptThese = function(classList) {
+			var $elem = $(this);
+
+			if($elem.length > 0) {
+				var existingClassList = $elem.attr("class").split(' ');
+				var classListToRemove = existingClassList.diff(classList);
+				$elem
+					.removeClass(classListToRemove.join(" "))
+					.addClass(classList.join(" "));
+			}
+			return $elem;
+		};
 		createElements = function() {
 			var routerLen = Router.routes.length;
 			for(var i=0;i<Router.routes.length; i++) {
 				var newElmement = document.createElement('div');
 				var $routes = document.getElementsByClassName('routes-list')[0];
 				newElmement.className = 'route-slider';
-				// newElmement.setAttribute('data-route-index',i);
-				// newElmement.style.zIndex = (routerLen - i);
 				$routes.appendChild(newElmement);
 			}
 		};
@@ -46,8 +62,8 @@
 
 		render = function(templateId, el, data) {
 			var allSlider = document.getElementsByClassName('route-slider slide');
-			var moveToSlider = document.getElementsByClassName('route-slider')[Router.routeTo.index];
-			var currentSlider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
+			var moveToSlider = getRouteSlideByIndex(Router.routeTo.index);
+			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
 			
 			var previousRouteIndex = -1;
 			var nextRouteIndex = -1;
@@ -93,6 +109,12 @@
 			}
 
 			setTimeout(function() {
+				var $moveToSliderPrev = $(moveToSlider).prev();
+				var $moveToSliderPrevPrevAll = $moveToSliderPrev.prevAll();
+
+				var $moveToSliderNext = $(moveToSlider).next();
+				var $moveToSliderNextNextAll = $moveToSliderPrev.nextAll();
+
 				if(Router.currentOperation === "pop") {
 					$(currentSlider)
 						.removeClass("current-slider")
@@ -101,27 +123,24 @@
 					$(currentSlider).one(whichTransitionEvent(),
 						function(event) {
 					    if(nextRouteIndex > -1) {
-							$(moveToSlider)
-								.next()
-								.attr("class", "route-slider next-slider")
-								.nextAll()
-								.attr('class','route-slider');
+							$moveToSliderNext
+								.removeClassExceptThese(["route-slider","next-slider"])
+							$moveToSliderNextNextAll
+								.removeClassExceptThese(["route-slider"]);
 						}
 						if(previousRouteIndex > -1)
 						{
-							$(moveToSlider)
-								.prev()
-								.attr("class", "route-slider prev-slider")
-								.prevAll()
-								.attr('class','route-slider');
+							$moveToSliderPrev
+								.removeClassExceptThese(["route-slider","prev-slider"])
+							$moveToSliderPrevPrevAll
+								.removeClassExceptThese(["route-slider"]);
 						}
 						$(moveToSlider)
-							.attr("class", "route-slider current-slider");
+							.removeClassExceptThese(["route-slider","current-slider"])
 					});
 				} else {
-					$(moveToSlider)
-							.prev()
-							.addClass("prev-animation");
+					$moveToSliderPrev
+						.addClass("prev-animation");
 							
 					$(moveToSlider)
 						.removeClass("next-slider")
@@ -130,31 +149,33 @@
 					$(moveToSlider).one(whichTransitionEvent(),
 						function(event) {
 						if(nextRouteIndex > -1) {
-							$(moveToSlider)
-								.next()
-								.attr("class", "route-slider next-slider")
-								.nextAll()
-								.attr('class','route-slider');
+							$moveToSliderNext
+								.removeClassExceptThese(["route-slider","next-slider"]);
+
+							$moveToSliderNextNextAll
+								.removeClassExceptThese(["route-slider"]);
 						}
 						if(previousRouteIndex > -1)
 						{
 							$(moveToSlider)
-								.removeClass("prev-slider")
-								.prev()
-								.attr("class", "route-slider prev-slider")
-								.prevAll()
-								.attr('class','route-slider');
+								.removeClass("prev-slider");
+
+							$moveToSliderPrev
+								.removeClassExceptThese(["route-slider","prev-slider"]);
+
+							$moveToSliderPrevPrevAll
+								.removeClassExceptThese(["route-slider"]);
 						}
 
 						$(moveToSlider)
-							.attr("class", "route-slider current-slider");
+							.removeClassExceptThese(["route-slider","current-slider"]);
 					});
 				}
 
 			},200);
 		},
 		updateTemplate = function() {
-			var currentSlider = document.getElementsByClassName('route-slider')[Router.currentRoute.index];
+			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
 			var source   = $(Router.currentRoute.template).html();
 			var template = hb.compile(source);
 			var html  = template(Router.currentRoute.data);
