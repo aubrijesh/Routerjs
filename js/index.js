@@ -79,7 +79,7 @@ $(document).ready(function() {
 	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[3],
+		animations: newAnimations[1],
 		beforeLoadAnimation: false,
 		methods: {
 			
