@@ -25,6 +25,12 @@ $(document).ready(function() {
 			page_name: "First page",
 			user_list: json
 		},
+		beforeRender: function() {
+			console.log("in before render");
+		},
+		afterRender: function() {
+			console.log("in After render");
+		},
 		renderAlways: false,
 		methods: {
 			firstFunction: function() {

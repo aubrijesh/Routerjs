@@ -264,12 +264,17 @@
 						$('body').on(event,target,bindFun);
 					}
 				}
+				if(this.routes[i].beforeRender) {
+					this.routes[i].beforeRender.bind(this.routes[i]);
+				}
+				if(this.routes[i].afterRender) {
+					this.routes[i].afterRender.bind(this.routes[i]);
+				}
+
 			}
 		},
 		go: function(routeName, currentRouteIndex, routeToIndex) {
 			var routeObject = '';
-			var templateData = this.routeTo.data;
-			var parentData = this.data;
 			if(this.currentOperation == "") {
 				this.currentOperation = "push";
 			}
@@ -279,8 +284,13 @@
 			else {
 				routeObject = this.routes[routeToIndex];
 			}
-
-			render(this.routeTo.template,$("#route-content"),templateData);
+			if(this.routeTo.beforeRender) {
+				this.routeTo.beforeRender();
+			}
+			render(this.routeTo.template,$("#route-content"),this.routeTo.data);
+			if(this.routeTo.afterRender) {
+				this.routeTo.afterRender();
+			}
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
