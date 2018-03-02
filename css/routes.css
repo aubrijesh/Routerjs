@@ -28,7 +28,6 @@ body .routes {
 }
 /* for animation of route */
 .route-slider {
-    transition: all .5s ease-in-out;
     display: block;
     height: 100%;
     width: 100%;
@@ -38,6 +37,18 @@ body .routes {
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
 }
+.route-slider.prev-slider {
+    z-index: 1;
+}
+.route-slider.slider,
+.route-slider.current-slider {
+    z-index: 2;
+}
+.route-slider.animating {
+    transition: all .5s ease-in-out;
+    z-index: 1000 !important;
+}
+
 .route-slider.prev-animation {
     // opacity: .5;
 }
@@ -50,19 +61,14 @@ body .routes {
 
 .route-slider.slide-to-left {
     transform: translateX(100%);
-	width: 100%;
-
 }
-.route-slider.slide-to-right {
-    transform: translateX(100%);
-    z-index: 1000 !important;
-}
-
-.route-slider.slide-to-left.slide{
+.route-slider.slide-to-left.slide {
     transform: translateX(0);
-	z-index: 1000 !important;
 }
 
+.route-slider.slide-to-right.slide {
+    transform: translateX(100%);
+}
 /* slide to top animation */
 
 .route-slider.slide-to-top {
@@ -70,7 +76,6 @@ body .routes {
 }
 .route-slider.slide-to-top.slide {
     top: 0;
-    z-index: 1000 !important;
 }
 
 .route-slider.slide-to-bottom {
@@ -78,7 +83,6 @@ body .routes {
 }
 .route-slider.slide-to-bottom.slide {
    top: 100%;
-   z-index: 1000 !important;
 }
 
 /* top to bottom animation */
@@ -88,7 +92,6 @@ body .routes {
 }
 .route-slider.top-to-bottom.slide {
     bottom: 0;
-    z-index: 1000 !important;
 }
 
 .route-slider.bottom-to-top {
@@ -96,7 +99,6 @@ body .routes {
 }
 .route-slider.bottom-to-top.slide {
     bottom: 100%;
-    z-index: 1000 !important;
 }
 
 /* left to right and right to left animation */
@@ -106,7 +108,6 @@ body .routes {
 }
 .route-slider.right-to-left.slide {
     right: 0;
-    z-index: 1000 !important;
 }
 
 .route-slider.left-to-right {
@@ -114,7 +115,6 @@ body .routes {
 }
 .route-slider.left-to-right.slide {
     right: 100%;
-    z-index: 1000 !important;
 }
 
 /* loader css */
@@ -146,14 +146,6 @@ body .routes {
     position: absolute;
     left: calc(50% - 20px);
     top: calc(50% - 20px);
-}
-
-.route-slider.prev-slider {
-    z-index: 1;
-}
-.route-slider.slider,
-.route-slider.current-slider {
-    z-index: 2;
 }
 
 @-webkit-keyframes spin {
