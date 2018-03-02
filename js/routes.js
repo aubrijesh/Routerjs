@@ -65,7 +65,7 @@
 			Descriptio: For rendering template using hanlderbar templating system
 		*/
 
-		render = function(templateId, el, data, parentData) {
+		render = function(templateId, el, data) {
 
 			var moveToSlider = getRouteSlideByIndex(Router.routeTo.index);
 			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
@@ -90,7 +90,7 @@
 			else {
 				$(moveToSlider).addClass(Router.activeAnimaion);
 			}
-			
+
 			if(Router.beforeLoadAnimation) {
 				Router.showLoader();
 			}
@@ -98,9 +98,9 @@
 			/* without timeout animation will not be bind */
 			if(!Router.currentRoute.renderAlways || !moveToSlider.innerHTML) {
 				if(!moveToSlider.innerHTML) {
-					var dataToRender = data;
-					dataToRender["parent"] = parentData;
-					renderRouteData(moveToSlider, templateId, dataToRender);
+					// var dataToRender = data;
+					// dataToRender["parent"] = parentData;
+					renderRouteData(moveToSlider, templateId, data);
 				}
 			}
 
@@ -205,7 +205,9 @@
 			var self = this;
 			this.routes = configuration.routes.map(function(obj, index) {
 				obj['index'] = index ; 
-				obj["update"] = self.update
+				obj["update"] = self.update;
+				obj.data["parent_data"] = configuration.data || {};
+				obj["parent"] = self;
 				return obj 
 			});
 			
@@ -278,7 +280,7 @@
 				routeObject = this.routes[routeToIndex];
 			}
 
-			render(this.routeTo.template,$("#route-content"),templateData,parentData);
+			render(this.routeTo.template,$("#route-content"),templateData);
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
