@@ -79,11 +79,16 @@ $(document).ready(function() {
 	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[1],
+		animations: newAnimations[0],
 		beforeLoadAnimation: false,
-		methods: {
-			
+		data: {
+			hello_parent: "Hello from parent"
 		},
+		methods: {
+			testing: function() {
+				console.log("testing in parent");
+			}
+		}, 
 		events: {
 			'click, .next': function() {
 				Router.push();
