@@ -79,9 +79,9 @@ $(document).ready(function() {
 			name: 'second template',
 			address: 'second template address'
 		},
-		render: function($el, templateElement, data) {
-			console.log($el, templateElement, data);
-			var source   = $(templateElement).html();
+		render: function($el, $templateElement, data) {
+			console.log($el, $templateElement, data);
+			var source   = $templateElement.html();
 			var template = Handlebars.compile(source);
 			var html  = template(data);
 			$el.html(html);

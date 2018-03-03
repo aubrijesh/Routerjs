@@ -106,7 +106,7 @@
 				}
 			}
 			else {
-				Router.currentRoute.render($(moveToSliderContainer), templateElement, data);
+				Router.currentRoute.render($(moveToSliderContainer), $(templateElement), data);
 			}
 			
 			if(Router.beforeLoadAnimation) {
@@ -298,7 +298,7 @@
 			if(this.routeTo.afterRender) {
 				this.routeTo.afterRender();
 			}
-			
+
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
