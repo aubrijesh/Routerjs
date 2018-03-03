@@ -246,7 +246,7 @@ Because your this.methods.getDataFromServe making ajax call that is asyncronous 
 ### render : function
 Params: ($el, $templateElement, data)
 
-case 1: it will be done automatically if you have set autoRender to false, default value of autoRender is true that means it will render automatically.
+case 1: it will be done automatically if you have not set autoRender to false, default value of autoRender is true that means it will render automatically.
 
 case 2: if you have explicitly set autoRender to false then you can handle render function in your route object. That give a bit more flexibility.
 this function have three parameters
