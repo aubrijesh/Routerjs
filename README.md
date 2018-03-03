@@ -123,30 +123,7 @@ $(document).ready(function() {
 	var routes = [ cmpFirst, cmpSecond];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[0],
-		beforeLoadAnimation: false,
-		data: {
-			hello_parent: "Hello from parent"
-		},
-		methods: {
-			testing: function() {
-				console.log("testing in parent");
-			}
-		}, 
-		events: {
-			'click, .next': function() {
-				Router.push();
-			},
-			'click, .prev': function() {
-				Router.pop();
-			}
-		},
-		showLoader: function() {
-			$('.loader').css('display','block');
-		},
-		hideLoader: function() {
-			$('.loader').css('display','none');
-		} 
+		animations: newAnimations[0] 
 	});
 });
   ```
@@ -319,3 +296,22 @@ events: {
 	}
 }
 ```
+
+# Routerjs Initilization Parameters:
+
+### routes: Array
+Array of route objects
+
+### animations: Object
+Animation object containing push and pop animation name
+
+
+### data , method, events:
+same as route object
+
+### showLoader: function 
+function to show loader before render function
+
+### hideLoader: function
+function to call after render function that will hide loader
+
