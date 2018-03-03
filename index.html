@@ -24,95 +24,87 @@
 	<script type="text/javascript" src="js/routes.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
 	<template id="template-first">
-		<section class="first-template red">
-			<header>
-				<div class="next">
-					<img src="image/next.png" />
-				</div>
-				<h2>{{page_name}}</h2>
-			</header>
-			<div class="content">
-				{{parent_data.hello_parent}}
-				{{#each user_list}}
-					<div class="row">
-						<div>
-							<h4 style="display: inline-block">First Name</h4>
-							: {{first_name}}
-						</div>
-						<div>
-							<h4 style="display: inline-block">Last Name</h4>
-							: {{last_name}}
-						</div>
-					</div>
-				{{/each}}
-				<button class="btn-update">Update Data</button>
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
 			</div>
-		</section>
+			<h2>{{page_name}}</h2>
+		</header>
+		<div class="content">
+			{{parent_data.hello_parent}}
+			{{#each user_list}}
+				<div class="row">
+					<div>
+						<h4 style="display: inline-block">First Name</h4>
+						: {{first_name}}
+					</div>
+					<div>
+						<h4 style="display: inline-block">Last Name</h4>
+						: {{last_name}}
+					</div>
+				</div>
+			{{/each}}
+			<button class="btn-update">Update Data</button>
+		</div>
 	</template>
 	<template id="template-second">
-		<section class="second-template blue">
-			<header>
-				<div class="next">
-					<img src="image/next.png" />
-				</div>
-				<h2>{{name}}</h2>
-				<div class="prev">
-					<img src="image/back.png" />
-				</div>
-			</header>
-			<div class="content">
-				<h1> Second page</h1>
-				<div class="item">
-					<span class="name">this is for second template</span>
-					<span>{{address}}</span>
-				</div>
-				<p>
-				There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-				</p>
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
 			</div>
-		</section>
+			<h2>{{name}}</h2>
+			<div class="prev">
+				<img src="image/back.png" />
+			</div>
+		</header>
+		<div class="content">
+			<h1> Second page</h1>
+			<div class="item">
+				<span class="name">this is for second template</span>
+				<span>{{address}}</span>
+			</div>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
+		</div>
 	</template>
 	<template id="template-third">
-		<section class="third-template green">
-			<header>
-				<div class="next">
-					<img src="image/next.png" />
-				</div>
-				<h2>{{name}}</h2>
-				<div class="prev">
-					<img src="image/back.png" />
-				</div>
-			</header>
-			<div class="content">
-				<div class="item">
-					<span class="name">this is for Third template</span>
-					<span>{{address}}</span>
-				</div>
-				<h1>Third Page</h1>
-				<p>
-				There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-				</p>
+		<header>
+			<div class="next">
+				<img src="image/next.png" />
 			</div>
-		</section>
+			<h2>{{name}}</h2>
+			<div class="prev">
+				<img src="image/back.png" />
+			</div>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for Third template</span>
+				<span>{{address}}</span>
+			</div>
+			<h1>Third Page</h1>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
+		</div>
 	</template>
 	<template id="template-fourth">
-		<section class="fourth-template gray">
-			<header>
-				<div class="prev">
-					<img src="image/back.png" />
-				</div>
-				<h2>{{name}}</h2>
-			</header>
-			<div class="content">
-				<div class="item">
-					<span class="name">this is for Fourth template</span>
-					<span>{{address}}</span>
-				</div>
-				<p>
-				There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-				</p>
-				<h1>Fourth Page</h1>
+		<header>
+			<div class="prev">
+				<img src="image/back.png" />
 			</div>
-		</section>
+			<h2>{{name}}</h2>
+		</header>
+		<div class="content">
+			<div class="item">
+				<span class="name">this is for Fourth template</span>
+				<span>{{address}}</span>
+			</div>
+			<p>
+			There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+			</p>
+			<h1>Fourth Page</h1>
+		</div>
 	</template>
 </html>
