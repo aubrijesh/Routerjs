@@ -72,9 +72,6 @@ $(document).ready(function() {
 			firstFunction: function() {
 				console.log("first function found");
 			},
-			newFunction: function() {
-				console.log("new function executed");
-			},
 			getDataFromServer: function() {
 				console.log("in get data from server");
 				var self = this;
@@ -122,27 +119,8 @@ $(document).ready(function() {
 		}
 	};
 
-	const cmpThird = {
-		name: 'third',
-		template: "#template-third",
-		data: {
-			name: 'third template',
-			address: 'third template address'
-		},
-		renderAlways: false,
-	};
 
-	const cmpFourth = {
-		name: 'fourth',
-		template: "#template-fourth",
-		data:  {
-			name: 'fourth template',
-			address: 'fourth template address'
-		},
-		renderAlways: false,
-	};
-
-	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth];
+	var routes = [ cmpFirst, cmpSecond];
 	Router.init({
 		routes: routes,
 		animations: newAnimations[0],
