@@ -186,3 +186,103 @@ On load of html page your first route template will be render.
 	} 
 ```
 
+## Route Object options
+
+### name : string
+name of route
+
+### template : string
+template id for that route
+
+### renderAlways: Boolean
+Default : true
+if you set renderalways to false then first time data will be render for that perticular route not each time you visit that route.
+If you want to render only first in route you can set this to false
+
+### autoRender: Boolean
+Default: true
+It gives to facility to manually use render function. if you set false then you can use render function to manually render as you want. If autoRender is true (Default is true ) then you don't need to worry about render you just need to put data in data object of route and it will render automatically.
+
+### data : Object
+data to render in route template
+
+### beforeRender: function
+function will be called just before data render in template
+you can use before render function to fetch data from server and update route data.
+example:
+
+```
+const cmpFirst = {
+	name: 'first',
+	template: '#template-first',
+	data: {
+		page_name: "First page",
+		user_list: json
+	},
+	beforeRender: function() {
+		console.log("in before render");
+		this.methods.getDataFromServer.bind(this)();
+	},
+	methods: {
+		getDataFromServer: function() {
+			console.log("in get data from server");
+			var self = this;
+			$.ajax({
+				url: "http://localhost:8080/js/user_json.json",
+				method: "GET",
+				success: function(data) {
+					console.log("in get json success", data);
+					self.data.user_list = JSON.parse(data);
+					self.update();
+				},
+				error: function(error) {
+					console.log("in ajax error");
+				}
+			})
+		}
+	},
+	events: {
+		}
+};
+
+```
+Here I am fetching data from server and updating data in route object. You need to bind reference of route object to pass route context in when calling this.methods.getDataFromServer. 
+Also after data is fetched you need to explicitly assign it to route object and call update function of route which will re-render handlerbar template. 
+Because your this.methods.getDataFromServe making ajax call that is asyncronous so render will not wait for that and you need to call update function explicitly in ajax success to update data in template.
+
+#render : function
+Params: ($el, templateElement, data)
+case 1: it will done automatically if you have set autoRender to false, default value of autoRender is true that means it will render automatically.
+case 2: if you have explicitly set autoRender to false then you can handle render function in your route object. That give a bit more flexibility. You can use it if you want to use render function by yourself.
+this function have three parameters
+$el: container element in route template in which you need to populate your html from template
+templateElement: html template element, you can use this to $el with data
+data: data of your route object
+
+### afterRender: Function
+function called after template render
+
+### methods: Object
+
+object containing methods used in your route
+Ex:
+```
+methods: {
+	testing: function() {
+		console.log("testing function");
+	}
+}
+```
+
+### events: Object
+List of event used in route. you can define your event like button click and can perform operation on that.
+Ex:
+```
+events: {
+	'click, .btn-update': function(el) {
+		this.data.user_list[1].first_name = "changed first name";
+		this.methods.firstFunction.bind(this)(); // you can call function using this, this will refer to current router object
+		this.update(); // need to call update as handlerbar template will update automatically
+	}
+}
+```
