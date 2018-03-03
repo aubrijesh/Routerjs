@@ -266,7 +266,7 @@ Here I am fetching data from server and updating data in route object. You need 
 Also after data is fetched you need to explicitly assign it to route object and call update function of route which will re-render handlerbar template. 
 Because your this.methods.getDataFromServe making ajax call that is asyncronous so render will not wait for that and you need to call update function explicitly in ajax success to update data in template.
 
-# render : function
+### render : function
 Params: ($el, templateElement, data)
 
 case 1: it will done automatically if you have set autoRender to false, default value of autoRender is true that means it will render automatically.
