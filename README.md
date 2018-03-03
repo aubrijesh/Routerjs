@@ -267,18 +267,30 @@ Also after data is fetched you need to explicitly assign it to route object and 
 Because your this.methods.getDataFromServe making ajax call that is asyncronous so render will not wait for that and you need to call update function explicitly in ajax success to update data in template.
 
 ### render : function
-Params: ($el, templateElement, data)
+Params: ($el, $templateElement, data)
 
-case 1: it will done automatically if you have set autoRender to false, default value of autoRender is true that means it will render automatically.
+case 1: it will be done automatically if you have set autoRender to false, default value of autoRender is true that means it will render automatically.
 
-case 2: if you have explicitly set autoRender to false then you can handle render function in your route object. That give a bit more flexibility. You can use it if you want to use render function by yourself.
+case 2: if you have explicitly set autoRender to false then you can handle render function in your route object. That give a bit more flexibility.
 this function have three parameters
 
 $el: container element in route template in which you need to populate your html from template
 
-templateElement: html template element, you can use this to $el with data
+$templateElement: html template element, you can use this to $el with data
 
 data: data of your route object
+
+Ex:
+```
+render: function($el, $templateElement, data) {
+	console.log($el, $templateElement, data);
+	var source   = $templateElement.html();
+	var template = Handlebars.compile(source);
+	var html  = template(data);
+	$el.html(html);
+}
+```
+you can easily compile template and assign it to $el.
 
 ### afterRender: Function
 function called after template render
