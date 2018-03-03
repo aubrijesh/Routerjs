@@ -27,9 +27,11 @@ $(document).ready(function() {
 		},
 		beforeRender: function() {
 			console.log("in before render");
+			this.methods.getDataFromServer.bind(this)();
 		},
 		afterRender: function() {
 			console.log("in After render");
+			console.log(this);
 		},
 		renderAlways: false,
 		methods: {
@@ -38,11 +40,27 @@ $(document).ready(function() {
 			},
 			newFunction: function() {
 				console.log("new function executed");
+			},
+			getDataFromServer: function() {
+				console.log("in get data from server");
+				var self = this;
+				$.ajax({
+					url: "http://localhost:8080/js/user_json.json",
+					method: "GET",
+					success: function(data) {
+						console.log("in get json success", data);
+						self.data.user_list = JSON.parse(data);
+						self.update();
+					},
+					error: function(error) {
+						console.log("in ajax error");
+					}
+				})
 			}
 		},
 		events: {
 			'click, .btn-update': function(el) {
-				this.data.user_list[5].first_name = "changed first name";
+				this.data.user_list[1].first_name = "changed first name";
 				this.methods.firstFunction.bind(this)(); // you can call function using this, this will refer to current router object
 				this.update(); // need to call update as handlerbar template will update automatically
 			},
@@ -55,11 +73,19 @@ $(document).ready(function() {
 	const cmpSecond = {
 		name: 'second',
 		template: '#template-second',
+		renderAlways: false,
+		autoRender: false,
 		data: {
 			name: 'second template',
 			address: 'second template address'
 		},
-		renderAlways: false,
+		render: function($el, $templateElement, data) {
+			console.log($el, $templateElement, data);
+			var source   = $templateElement.html();
+			var template = Handlebars.compile(source);
+			var html  = template(data);
+			$el.html(html);
+		}
 	};
 
 	const cmpThird = {

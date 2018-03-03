@@ -18,7 +18,7 @@
 			var source   = $(templateId).html();
 			var template = hb.compile(source);
 			var html  = template(data);
-			el.innerHTML = html;
+			$(el).html(html);
 		};
 		$.fn.removeClassExceptThese = function(classList) {
 			var $elem = $(this);
@@ -32,12 +32,15 @@
 			return $elem;
 		};
 		createElements = function() {
-			var routerLen = Router.routes.length;
+			var routeListHtml = "";
+			var routeList = document.getElementsByClassName('routes-list')[0];
 			for(var i=0;i<Router.routes.length; i++) {
-				var newElmement = document.createElement('div');
-				var $routes = document.getElementsByClassName('routes-list')[0];
-				newElmement.className = 'route-slider';
-				$routes.appendChild(newElmement);
+				var divparent = document.createElement('div');
+				var divcontainer = document.createElement('div');
+				divcontainer.className = "route-slider-container";
+				divparent.className = 'route-slider';
+				divparent.appendChild(divcontainer);
+				routeList.appendChild(divparent);
 			}
 		};
 		createElements();
@@ -65,16 +68,16 @@
 			Descriptio: For rendering template using hanlderbar templating system
 		*/
 
-		render = function(templateId, el, data) {
+		render = function(templateElement, el, data) {
 
 			var moveToSlider = getRouteSlideByIndex(Router.routeTo.index);
 			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
+			var moveToSliderContainer = moveToSlider.getElementsByClassName('route-slider-container');
 			
 			var previousRouteIndex = -1;
 			var nextRouteIndex = -1;
 			
-			if(Router.routeTo.index > 0)
-			{
+			if(Router.routeTo.index > 0) {
 				previousRouteIndex = (Router.routeTo.index - 1)
 			}
 
@@ -95,15 +98,17 @@
 				Router.showLoader();
 			}
 
-			/* without timeout animation will not be bind */
-			if(!Router.currentRoute.renderAlways || !moveToSlider.innerHTML) {
-				if(!moveToSlider.innerHTML) {
-					// var dataToRender = data;
-					// dataToRender["parent"] = parentData;
-					renderRouteData(moveToSlider, templateId, data);
+			if(Router.currentRoute.autoRender) {
+				if(!Router.currentRoute.renderAlways || !moveToSliderContainer.innerHTML) {
+					if(!moveToSliderContainer.innerHTML) {
+						renderRouteData($(moveToSliderContainer), templateElement, data);
+					}
 				}
 			}
-
+			else {
+				Router.currentRoute.render($(moveToSliderContainer), $(templateElement), data);
+			}
+			
 			if(Router.beforeLoadAnimation) {
 				Router.hideLoader();
 			}
@@ -158,11 +163,10 @@
 						.removeClassExceptThese(["route-slider","current-slider"]);
 				}
 			},50);
-			
 		},
 		updateTemplate = function() {
-			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
-			renderRouteData(currentSlider,Router.currentRoute.template,Router.currentRoute.data);
+			var currentSliderContainer = getRouteSlideByIndex(Router.currentRoute.index).getElementsByClassName('route-slider-container');
+			renderRouteData($(currentSliderContainer),Router.currentRoute.template,Router.currentRoute.data);
 		}
 	};
 
@@ -208,6 +212,9 @@
 				obj["update"] = self.update;
 				obj.data["parent_data"] = configuration.data || {};
 				obj["parent"] = self;
+				if(obj["autoRender"] === undefined) {
+					obj["autoRender"] = true
+				}
 				return obj 
 			});
 			
@@ -291,6 +298,7 @@
 			if(this.routeTo.afterRender) {
 				this.routeTo.afterRender();
 			}
+
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
