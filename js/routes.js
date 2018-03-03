@@ -77,8 +77,7 @@
 			var previousRouteIndex = -1;
 			var nextRouteIndex = -1;
 			
-			if(Router.routeTo.index > 0)
-			{
+			if(Router.routeTo.index > 0) {
 				previousRouteIndex = (Router.routeTo.index - 1)
 			}
 
@@ -299,6 +298,7 @@
 			if(this.routeTo.afterRender) {
 				this.routeTo.afterRender();
 			}
+			
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
