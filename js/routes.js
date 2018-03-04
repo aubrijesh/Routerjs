@@ -162,7 +162,7 @@
 					$(moveToSlider)
 						.removeClassExceptThese(["route-slider","current-slider"]);
 				}
-			},50);
+			},0);
 		},
 		updateTemplate = function() {
 			var currentSliderContainer = getRouteSlideByIndex(Router.currentRoute.index).getElementsByClassName('route-slider-container');
@@ -186,6 +186,26 @@
 		return obj;
 	};
 
+	bindEvents = function(eventObject, bindToObject) {
+		for(key in eventObject) {
+			var keySplit = key.split(",");
+			var target = keySplit[1].trim();
+			var event = keySplit[0].trim();
+			var fun = eventObject[key];
+			var bindFun = "";
+			if(typeof fun === 'string') {
+				fun = eventObject[i].methods[fun];
+			}
+			bindFun = fun.bind(bindToObject);
+			$('body').on(event,target,bindFun);
+		}
+	};
+	
+	bindMethods = function(methodObject, bindToObject) {
+		for(key in methodObject) {
+			methodObject[key] = methodObject[key].bind(bindToObject);
+		}
+	};
 	window.Router =  {
 		routes: [],
 		currentRoute: '',
@@ -239,37 +259,29 @@
 			}
 			initilization();
 
-			/* bind events */
+			/*bind methods of router */
+
+			if(configuration.methods) {
+				bindMethods(configuration.methods, this);
+			}
+
+			/* bind events of router*/
 			
 			if(configuration.events) {
-				for(key in configuration.events) {
-					var keySplit = key.split(",");
-					var target = keySplit[1].trim();
-					var event = keySplit[0].trim();
-					var fun = configuration.events[key];
-					var bindFun = "";
-					if(typeof fun === 'string') {
-						fun = configuration.events[i].methods[fun];
-					}
-					bindFun = fun.bind(this);
-					$('body').on(event,target,bindFun);
+				bindEvents(configuration.events, this);
+			}
+
+			/* bind methods of routes*/
+			for(var i=0;i<this.routes.length; i++) {
+				var cRoute = this.routes[i];
+				if(cRoute.methods) {
+					bindMethods(cRoute.methods, cRoute);
 				}
 			}
 			this.go('',this.currentRoute.index, this.routeTo.index);
 			for(var i=0;i<this.routes.length; i++) {
 				if(this.routes[i].events) {
-					for(key in this.routes[i].events) {
-						var keySplit = key.split(",");
-						var target = keySplit[1].trim();
-						var event = keySplit[0].trim();
-						var fun = this.routes[i].events[key];
-						var bindFun = "";
-						if(typeof fun === 'string') {
-							fun = this.routes[i].methods[fun];
-						}
-						bindFun = fun.bind(this.routes[i]);
-						$('body').on(event,target,bindFun);
-					}
+					bindEvents(this.routes[i].events, this.routes[i]);
 				}
 				if(this.routes[i].beforeRender) {
 					this.routes[i].beforeRender.bind(this.routes[i]);
@@ -298,7 +310,6 @@
 			if(this.routeTo.afterRender) {
 				this.routeTo.afterRender();
 			}
-
 			this.currentRoute = this.routeTo;
 		},
 		push: function() {
