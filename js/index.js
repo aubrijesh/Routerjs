@@ -27,7 +27,7 @@ $(document).ready(function() {
 		},
 		beforeRender: function() {
 			console.log("in before render");
-			this.methods.getDataFromServer.bind(this)();
+			this.methods.getDataFromServer();
 		},
 		afterRender: function() {
 			console.log("in After render");
@@ -61,7 +61,7 @@ $(document).ready(function() {
 		events: {
 			'click, .btn-update': function(el) {
 				this.data.user_list[1].first_name = "changed first name";
-				this.methods.firstFunction.bind(this)(); // you can call function using this, this will refer to current router object
+				this.methods.firstFunction(); // you can call function using this, this will refer to current router object
 				this.update(); // need to call update as handlerbar template will update automatically
 			},
 			'click, .row': function(el) {
