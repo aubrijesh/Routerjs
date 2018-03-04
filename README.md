@@ -61,7 +61,7 @@ $(document).ready(function() {
 		},
 		beforeRender: function() {
 			console.log("in before render");
-			this.methods.getDataFromServer.bind(this)();
+			this.methods.getDataFromServer();
 		},
 		afterRender: function() {
 			console.log("in After render");
@@ -92,7 +92,7 @@ $(document).ready(function() {
 		events: {
 			'click, .btn-update': function(el) {
 				this.data.user_list[1].first_name = "changed first name";
-				this.methods.firstFunction.bind(this)(); // you can call function using this, this will refer to current router object
+				this.methods.firstFunction(); // you can call function using this, this will refer to current router object
 				this.update(); // need to call update as handlerbar template will update automatically
 			},
 			'click, .row': function(el) {
@@ -214,7 +214,7 @@ const cmpFirst = {
 	},
 	beforeRender: function() {
 		console.log("in before render");
-		this.methods.getDataFromServer.bind(this)();
+		this.methods.getDataFromServer();
 	},
 	methods: {
 		getDataFromServer: function() {
@@ -239,8 +239,8 @@ const cmpFirst = {
 };
 
 ```
-Here I am fetching data from server and updating data in route object. You need to bind reference of route object to pass route context in when calling this.methods.getDataFromServer. 
-Also after data is fetched you need to explicitly assign it to route object and call update function of route which will re-render handlerbar template. 
+Here I am fetching data from server and updating data in route object.
+After data is fetched you need to explicitly assign it to route object and call update function of route which will re-render handlerbar template. 
 Because your this.methods.getDataFromServe making ajax call that is asyncronous so render will not wait for that and you need to call update function explicitly in ajax success to update data in template.
 
 ### render : function
@@ -291,7 +291,7 @@ Ex:
 events: {
 	'click, .btn-update': function(el) {
 		this.data.user_list[1].first_name = "changed first name";
-		this.methods.firstFunction.bind(this)(); // you can call function using this, this will refer to current router object
+		this.methods.firstFunction(); // you can call function using this, this will refer to current router object
 		this.update(); // need to call update as handlerbar template will update automatically
 	}
 }
