@@ -23,11 +23,13 @@
 		$.fn.removeClassExceptThese = function(classList) {
 			var $elem = $(this);
 			if($elem.length > 0) {
-				var existingClassList = $elem.attr("class").split(' ');
-				var classListToRemove = existingClassList.diff(classList);
-				$elem
-					.removeClass(classListToRemove.join(" "))
-					.addClass(classList.join(" "));
+				$elem.each(function(index, currentElem) {
+					var existingClassList = $(currentElem).attr("class").split(' ');
+					var classListToRemove = existingClassList.diff(classList);
+					$(currentElem)
+						.removeClass(classListToRemove.join(" "))
+						.addClass(classList.join(" "));
+				});
 			}
 			return $elem;
 		};
@@ -74,24 +76,18 @@
 			var currentSlider = getRouteSlideByIndex(Router.currentRoute.index);
 			var moveToSliderContainer = moveToSlider.getElementsByClassName('route-slider-container');
 			
-			var previousRouteIndex = -1;
-			var nextRouteIndex = -1;
-			
-			if(Router.routeTo.index > 0) {
-				previousRouteIndex = (Router.routeTo.index - 1)
-			}
-
-			if(Router.routeTo.index < (Router.routes.length - 1))  {
-				nextRouteIndex = (Router.routeTo.index + 1)
-			}
-
 			Router.activeAnimaion = Router.activeAnimaion || Router.animations.push;
 			
 			if(Router.currentOperation === "pop") {
 				$(currentSlider).addClass(Router.activeAnimaion);
+				$(moveToSlider)
+					.addClass("prev-slider")
+					.siblings(".prev-slider")
+					.removeClass("prev-slider");  // to make visible before slider start of prev page
 			}
 			else {
 				$(moveToSlider).addClass(Router.activeAnimaion);
+
 			}
 
 			if(Router.beforeLoadAnimation) {
@@ -118,15 +114,18 @@
 				var $moveToSliderNext = $(moveToSlider).next();
 
 				if(Router.currentOperation === "pop") {
+					
 					$(currentSlider)
 						.addClass("animating")
 						.removeClass("current-slider")
 						.addClass("slide");
+
 					$(currentSlider).one(whichTransitionEvent(),
 						function(event) {
 							afterAnimationEnd($(currentSlider));					
 					});
 				} else {
+			
 					$moveToSliderPrev
 						.addClass("prev-animation");
 
@@ -148,11 +147,6 @@
 						.removeClassExceptThese(["route-slider","next-slider"])
 						.nextAll()
 						.removeClassExceptThese(["route-slider"]);
-
-					if(Router.currentOperation === "push") {
-						$(moveToSlider)
-							.removeClass("prev-slider");
-					}
 					
 					$moveToSliderPrev
 						.removeClassExceptThese(["route-slider","prev-slider"])
@@ -233,7 +227,7 @@
 				obj.data["parent_data"] = configuration.data || {};
 				obj["parent"] = self;
 				if(obj["autoRender"] === undefined) {
-					obj["autoRender"] = true
+					obj["autoRender"] = true;
 				}
 				return obj 
 			});
@@ -278,7 +272,7 @@
 					bindMethods(cRoute.methods, cRoute);
 				}
 			}
-			this.go('',this.currentRoute.index, this.routeTo.index);
+			this.go(this.routeTo.index);
 			for(var i=0;i<this.routes.length; i++) {
 				if(this.routes[i].events) {
 					bindEvents(this.routes[i].events, this.routes[i]);
@@ -292,49 +286,44 @@
 
 			}
 		},
-		go: function(routeName, currentRouteIndex, routeToIndex) {
-			var routeObject = '';
-			if(this.currentOperation == "") {
-				this.currentOperation = "push";
+		go: function(routeToIndex) {
+			var currentRouteIndex = $(".route-slider.current-slider").index();
+			if((routeToIndex != currentRouteIndex) && (routeToIndex < this.routes.length) && (routeToIndex > -1) ) {
+				this.routeTo = this.routes[routeToIndex];
+			    if (currentRouteIndex < routeToIndex) {
+					this.activeAnimaion = this.animations.push;
+					this.currentOperation = "push";
+			    }
+			    else if(currentRouteIndex > routeToIndex) {
+					this.activeAnimaion = this.animations.pop;
+					this.currentOperation = "pop";
+			    }
+				if(this.routeTo.beforeRender) {
+					this.routeTo.beforeRender();
+				}
+				render(this.routeTo.template,$("#route-content"),this.routeTo.data);
+				if(this.routeTo.afterRender) {
+					this.routeTo.afterRender();
+				}
+				this.currentRoute = this.routeTo;
 			}
-			if(routeToIndex === null) {
-				routeObject = getRouteObject(routeName);
+			else if (routeToIndex == currentRouteIndex) {
+				console.log("you are in same route");
 			}
 			else {
-				routeObject = this.routes[routeToIndex];
+				console.log("invalid router router to index");
 			}
-			if(this.routeTo.beforeRender) {
-				this.routeTo.beforeRender();
-			}
-			render(this.routeTo.template,$("#route-content"),this.routeTo.data);
-			if(this.routeTo.afterRender) {
-				this.routeTo.afterRender();
-			}
-			this.currentRoute = this.routeTo;
+			
 		},
 		push: function() {
 			var currentRouteIndex = $(".route-slider.current-slider").index();
 			var routeToIndex = $(".route-slider.next-slider").index();
-
-			this.currentRoute = this.routes[currentRouteIndex];
-			this.routeTo = this.routes[routeToIndex];
-
-			if(this.currentRoute.index < (this.routes.length - 1)) {
-				this.routeTo = this.routes[this.currentRoute.index + 1];
-				this.activeAnimaion = this.animations.push;
-				this.currentOperation = "push";
-				this.go('', this.currentRoute.index, this.routeTo.index);
-			}
-			else {
-				console.log("can't push, no next route");
-			}
+			go(routeToIndex);
 		},
 		pop: function() {
 			if(this.currentRoute.index > 0) {
-				this.activeAnimaion = this.animations.pop;
-				this.routeTo = this.routes[this.currentRoute.index - 1];
-				this.currentOperation = "pop";
-				this.go('',this.currentRoute.index, this.routeTo.index);
+				var routeToIndex = this.currentRoute.index - 1;
+				go(routeToIndex);
 			}
 			else {
 				console.log("can't pop, no more routes to pop")
