@@ -149,6 +149,9 @@ On load of html page your first route template will be render.
   
   ### Router.pop()
   pop current route and loads previous route to context and renders template associate with it.
+  
+  ### Router.go(pageIndex)
+  You can pass pageindex (starting with zero) to visit perticular page wether it is in forward or backward direction. it will also keep your animation by   detecting wether it is in forward (like push) or backward direction (like pop).
 
   You can navigate using push and pop method by calling them in button click or on click of header navigation icons.
   
