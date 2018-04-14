@@ -318,12 +318,12 @@
 		push: function() {
 			var currentRouteIndex = $(".route-slider.current-slider").index();
 			var routeToIndex = $(".route-slider.next-slider").index();
-			go(routeToIndex);
+			this.go(routeToIndex);
 		},
 		pop: function() {
 			if(this.currentRoute.index > 0) {
 				var routeToIndex = this.currentRoute.index - 1;
-				go(routeToIndex);
+				this.go(routeToIndex);
 			}
 			else {
 				console.log("can't pop, no more routes to pop")
