@@ -32,6 +32,7 @@ body .routes {
     height: 100%;
     width: 100%;
     position: absolute;
+    
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -o-backface-visibility: hidden;
@@ -101,6 +102,7 @@ body .routes {
     bottom: 100%;
 }
 
+
 /* left to right and right to left animation */
 
 .route-slider.right-to-left {
@@ -115,6 +117,45 @@ body .routes {
 }
 .route-slider.left-to-right.slide {
     right: 100%;
+}
+
+/* scale animations */
+.route-slider.scale-up {
+    transform: scale(0); /* reset before starting animations */
+}
+.route-slider.scale-up.slide {
+    transform: scale(1);
+}
+
+.route-slider.scale-down.slide {
+    transform: scale(0);
+}
+
+/* scale cicle animations */
+.route-slider.scale-up-circle {
+    transform: scale(0);
+    border-radius: 100%; /* reset before starting animations */
+}
+.route-slider.scale-up-circle.slide {
+    transform: scale(1);
+    border-radius: 0%;
+}
+
+.route-slider.scale-down-circle.slide {
+    transform: scale(0);
+    border-radius: 100%;
+}
+
+/* scale and rotate animations */
+.route-slider.scale-up-rotate {
+    transform: scale(0) rotate(0deg); /* reset before starting animations */
+}
+.route-slider.scale-up-rotate.slide {
+    transform: scale(1) rotate(360deg);
+}
+
+.route-slider.scale-down-rotate.slide {
+    transform: scale(0) rotate(-360deg);
 }
 
 /* loader css */
