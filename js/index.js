@@ -108,7 +108,17 @@ $(document).ready(function() {
 		renderAlways: false,
 	};
 
-	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth];
+	const cmpFifth = {
+		name: 'fifth',
+		template: "#template-fourth",
+		data:  {
+			name: 'fifth template',
+			address: 'fifth template address'
+		},
+		renderAlways: false,
+	};
+
+	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth, cmpFifth];
 	Router.init({
 		routes: routes,
 		animations: newAnimations[0],
