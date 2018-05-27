@@ -12,7 +12,7 @@ Fom templating, I am using handlerbar. So for now dependency is JQuery and Handl
 ## How to Use:
 
 Simply Include:
-routes.css, routes.js with dependancies(JQuery, Hanlderbar) to your html
+routes.css, routes.js with dependancies(JQuery, Handlerbars) to your html
 ``` html
 <link rel="stylesheet" type="text/css" href="css/routes.css">
 
