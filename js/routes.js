@@ -79,7 +79,9 @@
 			Router.activeAnimaion = Router.activeAnimaion || Router.animations.push;
 			
 			if(Router.currentOperation === "pop") {
-				$(currentSlider).addClass(Router.activeAnimaion);
+				$(currentSlider)
+					.addClass(Router.activeAnimaion);
+
 				$(moveToSlider)
 					.addClass("prev-slider")
 					.siblings(".prev-slider")
@@ -116,7 +118,9 @@
 				if(Router.currentOperation === "pop") {
 					
 					$(currentSlider)
-						.addClass("animating")
+						.addClass("animating");
+
+					$(currentSlider)
 						.removeClass("current-slider")
 						.addClass("slide");
 
@@ -130,7 +134,9 @@
 						.addClass("prev-animation");
 
 					$(moveToSlider)
-						.addClass("animating")
+						.addClass("animating");
+
+					$(moveToSlider)
 						.removeClass("next-slider")
 						.addClass("slide");
 

@@ -15,6 +15,18 @@ $(document).ready(function() {
 		{
 			push: 'right-to-left',
 			pop: 'left-to-right'
+		},
+		{
+			push: 'scale-up',
+			pop: 'scale-down'
+		},
+		{
+			push: 'scale-up-rotate',
+			pop: 'scale-down-rotate'
+		},
+		{
+			push: 'scale-up-circle',
+			pop: 'scale-down-circle'
 		}
 	];
 
@@ -121,7 +133,7 @@ $(document).ready(function() {
 	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth, cmpFifth];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[0],
+		animations: newAnimations[6],
 		beforeLoadAnimation: false,
 		data: {
 			hello_parent: "Hello from parent"
