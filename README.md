@@ -6,7 +6,11 @@ The user will be able to use it with JQuery and other JQuery plugins. It will pr
 Beside routing,It will provide smooth transitions of pages. For most hybrid app development we need some smooth transition between pages. So no need to use other css library for transitions.
 Corrently we have four transitions. In future we will add more animation for routes.
 Fom templating, I am using handlerbar. So for now dependency is JQuery and Handlerbar.js.
-  
+
+#### Routerjs in action
+![alt text](https://github.com/aubrijesh/Routerjs/blob/master/image/demos/rjleftright.gif "Animation left right")
+![alt text](https://github.com/aubrijesh/Routerjs/blob/master/image/demos/rjupdown.gif "Animation up down")
+
 ### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
@@ -55,18 +59,39 @@ $(document).ready(function() {
 			page_name: "First page",
 			user_list: json
 		},
+		beforeRender: function() {
+			console.log("in before render");
+			this.methods.getDataFromServer();
+		},
+		afterRender: function() {
+			console.log("in After render");
+			console.log(this);
+		},
 		renderAlways: false,
 		methods: {
 			firstFunction: function() {
 				console.log("first function found");
 			},
-			newFunction: function() {
-				console.log("new function executed");
+			getDataFromServer: function() {
+				console.log("in get data from server");
+				var self = this;
+				$.ajax({
+					url: "http://localhost:8080/js/user_json.json",
+					method: "GET",
+					success: function(data) {
+						console.log("in get json success", data);
+						self.data.user_list = JSON.parse(data);
+						self.update();
+					},
+					error: function(error) {
+						console.log("in ajax error");
+					}
+				})
 			}
 		},
 		events: {
 			'click, .btn-update': function(el) {
-				this.data.user_list[5].first_name ="changed first name";
+				this.data.user_list[1].first_name = "changed first name";
 				this.methods.firstFunction(); // you can call function using this, this will refer to current router object
 				this.update(); // need to call update as handlerbar template will update automatically
 			},
@@ -79,56 +104,28 @@ $(document).ready(function() {
 	const cmpSecond = {
 		name: 'second',
 		template: '#template-second',
+		renderAlways: false,
+		autoRender: false,
 		data: {
 			name: 'second template',
 			address: 'second template address'
 		},
-		renderAlways: false,
+		render: function($el, templateElement, data) {
+			console.log($el, templateElement, data);
+			var source   = $(templateElement).html();
+			var template = Handlebars.compile(source);
+			var html  = template(data);
+			$el.html(html);
+		}
 	};
 
-	const cmpThird = {
-		name: 'third',
-		template: "#template-third",
-		data: {
-			name: 'third template',
-			address: 'third template address'
-		},
-		renderAlways: false,
-	};
 
-	const cmpFourth = {
-		name: 'fourth',
-		template: "#template-fourth",
-		data:  {
-			name: 'fourth template',
-			address: 'fourth template address'
-		},
-		renderAlways: false,
-	};
-
-	var routes = [ cmpFirst, cmpSecond, cmpThird, cmpFourth];
+	var routes = [ cmpFirst, cmpSecond];
 	Router.init({
 		routes: routes,
-		animations: newAnimations[3],
-		beforeLoadAnimation: false,
-		methods: {
-			
-		},
-		events: {
-			'click, .next': function() {
-				Router.push();
-			},
-			'click, .prev': function() {
-				Router.pop();
-			}
-		},
-		showLoader: function() {
-			$('.loader').css('display','block');
-		},
-		hideLoader: function() {
-			$('.loader').css('display','none');
-		} 
+		animations: newAnimations[0] 
 	});
+});
   ```
   
 It is having four routes each route object having two key name and template. this template will be rendered when route matches with route object name.
@@ -152,8 +149,11 @@ On load of html page your first route template will be render.
   
   ### Router.pop()
   pop current route and loads previous route to context and renders template associate with it.
+  
+  ### Router.go(pageIndex)
+  You can pass pageindex (starting with zero) to visit perticular page wether it is in forward or backward direction. it will also keep your animation by   detecting wether it is in forward (like push) or backward direction (like pop).
 
-  You can navigate using push and pop method by calling them in button click or on click of header navigation icons.
+  You can navigate using push, pop and go method by calling them in button click or on click of header navigation icons.
   
   Example:
   ``` javascript
@@ -181,4 +181,140 @@ On load of html page your first route template will be render.
 		pop: 'left-to-right'
 	} 
 ```
+
+## Route Object options
+
+### name : string
+name of route
+
+### template : string
+template id for that route
+
+### renderAlways: Boolean
+Default : true
+if you set renderalways to false then first time data will be render for that perticular route not each time you visit that route.
+If you want to render only first in route you can set this to false
+
+### autoRender: Boolean
+Default: true
+It gives to facility to manually use render function. if you set false then you can use render function to manually render as you want. If autoRender is true (Default is true ) then you don't need to worry about render you just need to put data in data object of route and it will render automatically.
+
+### data : Object
+data to render in route template
+
+### beforeRender: function
+function will be called just before data render in template
+you can use before render function to fetch data from server and update route data.
+example:
+
+```
+const cmpFirst = {
+	name: 'first',
+	template: '#template-first',
+	data: {
+		page_name: "First page",
+		user_list: json
+	},
+	beforeRender: function() {
+		console.log("in before render");
+		this.methods.getDataFromServer();
+	},
+	methods: {
+		getDataFromServer: function() {
+			console.log("in get data from server");
+			var self = this;
+			$.ajax({
+				url: "http://localhost:8080/js/user_json.json",
+				method: "GET",
+				success: function(data) {
+					console.log("in get json success", data);
+					self.data.user_list = JSON.parse(data);
+					self.update();
+				},
+				error: function(error) {
+					console.log("in ajax error");
+				}
+			})
+		}
+	},
+	events: {
+		}
+};
+
+```
+Here I am fetching data from server and updating data in route object.
+After data is fetched you need to explicitly assign it to route object and call update function of route which will re-render handlerbar template. 
+Because your this.methods.getDataFromServe making ajax call that is asyncronous so render will not wait for that and you need to call update function explicitly in ajax success to update data in template.
+
+### render : function
+Params: ($el, $templateElement, data)
+
+case 1: it will be done automatically if you have not set autoRender to false, default value of autoRender is true that means it will render automatically.
+
+case 2: if you have explicitly set autoRender to false then you can handle render function in your route object. That give a bit more flexibility.
+this function have three parameters
+
+$el: container element in route template in which you need to populate your html from template
+
+$templateElement: html template element, you can use this to $el with data
+
+data: data of your route object
+
+Ex:
+```
+render: function($el, $templateElement, data) {
+	console.log($el, $templateElement, data);
+	var source   = $templateElement.html();
+	var template = Handlebars.compile(source);
+	var html  = template(data);
+	$el.html(html);
+}
+```
+you can easily compile template and assign it to $el.
+
+### afterRender: Function
+function called after template render
+
+### methods: Object
+
+object containing methods used in your route
+Ex:
+```
+methods: {
+	testing: function() {
+		console.log("testing function");
+	}
+}
+```
+
+### events: Object
+List of event used in route. you can define your event like button click and can perform operation on that.
+Ex:
+```
+events: {
+	'click, .btn-update': function(el) {
+		this.data.user_list[1].first_name = "changed first name";
+		this.methods.firstFunction(); // you can call function using this, this will refer to current router object
+		this.update(); // need to call update as handlerbar template will update automatically
+	}
+}
+```
+
+# Routerjs Initilization Parameters:
+
+### routes: Array
+Array of route objects
+
+### animations: Object
+Animation object containing push and pop animation name
+
+
+### data , method, events:
+same as route object
+
+### showLoader: function 
+function to show loader before render function
+
+### hideLoader: function
+function to call after render function that will hide loader
 
