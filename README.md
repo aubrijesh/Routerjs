@@ -11,7 +11,6 @@ Fom templating, I am using handlerbar. So for now dependency is JQuery and Handl
 ![alt text](https://github.com/aubrijesh/Routerjs/blob/master/image/demos/rjleftright.gif "Animation left right")
 ![alt text](https://github.com/aubrijesh/Routerjs/blob/master/image/demos/rjupdown.gif "Animation up down")
 
-### Check Live Example: http://blog.jquery-router.softagreement.com/
 
 ## How to Use:
 
